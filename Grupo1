@@ -1,0 +1,51 @@
+alter table INSUMO_CLINICA
+   drop constraint FK_INSUMO_C_REFERENCE_INSUMO;
+
+alter table INSUMO_CLINICA
+   drop constraint FK_INSUMO_C_REFERENCE_CLINICA;
+
+drop table CLINICA cascade constraints;
+
+drop table INSUMO cascade constraints;
+
+drop table INSUMO_CLINICA cascade constraints;
+
+/*==============================================================*/
+/* Table: CLINICA                                               */
+/*==============================================================*/
+create table CLINICA 
+(
+   COD_CLINICA          NUMBER(40)           not null,
+   NOMBRE               VARCHAR(40),
+   DIRECCION            VARCHAR(75),
+   constraint PK_CLINICA primary key (COD_CLINICA)
+);
+
+/*==============================================================*/
+/* Table: INSUMO                                                */
+/*==============================================================*/
+create table INSUMO 
+(
+   COD_INSUMO           NUMBER(15)           not null,
+   NOMBRE               VARCHAR(50),
+   FECHA_VENCIMIENTO    DATE,
+   LABORATORIO          VARCHAR(40),
+   constraint PK_INSUMO primary key (COD_INSUMO)
+);
+
+/*==============================================================*/
+/* Table: INSUMO_CLINICA                                        */
+/*==============================================================*/
+create table INSUMO_CLINICA 
+(
+   COD_INSUMO           NUMBER(15),
+   COD_CLINICA          NUMBER(40)
+);
+
+alter table INSUMO_CLINICA
+   add constraint FK_INSUMO_C_REFERENCE_INSUMO foreign key (COD_INSUMO)
+      references INSUMO (COD_INSUMO);
+
+alter table INSUMO_CLINICA
+   add constraint FK_INSUMO_C_REFERENCE_CLINICA foreign key (COD_CLINICA)
+      references CLINICA (COD_CLINICA);
