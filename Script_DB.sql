@@ -124,7 +124,7 @@ CREATE TABLE diagnostico (
     id_diagnostico         INTEGER,
     id_persona             INTEGER NOT NULL,
     id_historial_clinico   INTEGER NOT NULL,
-    diagnostico            VARCHAR2(100),
+    diagnostico            VARCHAR2(4000),
     fecha_registro         DATE,
     id_enfermedad          INTEGER NOT NULL
 );
@@ -485,6 +485,85 @@ CREATE TABLE zonas (
     usuario_registro   VARCHAR2(25)
 );
 
+CREATE TABLE Tipo_Odontologia(
+    id_Odontologia NUMBER(5) NOT NULL,
+    descripcion varchar2(1000),
+    PRIMARY KEY(id_Odontologia)
+);
+
+CREATE TABLE Tipo_Paciente_O(
+    idTipoPaciente NUMBER(5) NOT NULL,
+    idPaciente INTEGER NOT NULL,
+    idTipoOdontologia NUMBER(5) NOT NULL,
+    idDiagnostico INTEGER NOT NULL,
+    observacion VARCHAR2(1000),
+    fechaRegistro date,
+    PRIMARY KEY(idTipoPaciente)
+
+);
+
+
+CREATE TABLE ALIMENTO (
+    id_alimento number(9) not null,
+    alimento varchar2(128) UNIQUE not null
+);
+ALTER TABLE ALIMENTO ADD CONSTRAINT alimento_pk PRIMARY KEY ( id_alimento );
+
+CREATE TABLE tiempo_comida (
+	id_tiempo_comida number(5) not null,
+	tiempo varchar2(128) UNIQUE not null
+);
+
+ALTER TABLE tiempo_comida ADD CONSTRAINT tiempo_comida_pk PRIMARY KEY ( id_tiempo_comida );
+
+CREATE TABLE DIETA (
+    id_dieta   number(9) NOT NULL,
+    id_cita INTEGER NOT NULL,
+    id_medico INTEGER not null,
+    id_diagnostico INTEGER not null
+);
+
+ALTER TABLE DIETA ADD CONSTRAINT dieta_pk PRIMARY KEY ( id_dieta );
+ALTER TABLE DIETA ADD CONSTRAINT dieta_cita_fk FOREIGN KEY ( id_cita ) REFERENCES cita ( id_cita );
+ALTER TABLE DIETA ADD CONSTRAINT dieta_medico_fk FOREIGN KEY ( id_medico ) REFERENCES medico ( id_persona );
+ALTER TABLE DIETA ADD CONSTRAINT dieta_diagnostico_fk FOREIGN KEY ( id_diagnostico ) REFERENCES diagnostico ( id_diagnostico );
+
+CREATE TABLE DETALLE_DIETA (
+	id_detalle_dieta number(9) not null,
+	id_dieta number(9) not null,
+	id_alimento     number(9) not null,
+    cantidad        varchar2(100) not null,
+    id_tiempo_comida number(5) not null,
+    descripcion varchar2(1024)
+);
+
+ALTER TABLE DETALLE_DIETA ADD CONSTRAINT detalle_dieta_pk PRIMARY KEY ( id_detalle_dieta );
+ALTER TABLE DETALLE_DIETA ADD CONSTRAINT detalle_dieta_fk FOREIGN KEY ( id_dieta ) REFERENCES DIETA ( id_dieta );
+ALTER TABLE DETALLE_DIETA ADD CONSTRAINT detalle_alimento_fk FOREIGN KEY ( id_alimento ) REFERENCES alimento ( id_alimento );
+ALTER TABLE DETALLE_DIETA ADD CONSTRAINT detalle_tiempo_fk FOREIGN KEY ( id_tiempo_comida ) REFERENCES tiempo_comida ( id_tiempo_comida );
+COMMENT ON COLUMN DETALLE_DIETA.cantidad IS 'Cantidad de alimento, gramos, cucharadas, vasos, porciones, etc.';
+COMMENT ON COLUMN DETALLE_DIETA.descripcion IS 'Descripción de como cocinar o consumir el alimento.';
+
+
+
+
+ALTER TABLE PACIENTE_ODONTOLOGIA ADD CONSTRAINT paciente_pk PRIMARY KEY ( id_persona );
+ALTER TABLE DIAGNOSTICO ADD CONSTRAINT diagnostico_pk PRIMARY KEY ( id_diagnostico );
+
+ALTER TABLE TIPO_PACIENTE_O ADD CONSTRAINT Paciente_fk 
+        FOREIGN KEY(idPaciente)
+        REFERENCES PACIENTE_ODONTOLOGIA(id_persona);
+
+ALTER TABLE TIPO_PACIENTE_O ADD CONSTRAINT tipo_fk 
+        FOREIGN KEY(idTipoOdontologia)
+        REFERENCES Tipo_Odontologia(id_Odontologia);
+        
+
+ALTER TABLE TIPO_PACIENTE_O ADD  CONSTRAINT diagnostico_fk
+        FOREIGN KEY(idDiagnostico)
+        REFERENCES DIAGNOSTICO(ID_DIAGNOSTICO);
+
+
 ALTER TABLE zonas ADD CONSTRAINT zonas_pk PRIMARY KEY ( id_zona );
 
 ALTER TABLE cita
@@ -644,6 +723,10 @@ ALTER TABLE movimientos_historial
 ALTER TABLE paciente_odontologia
     ADD CONSTRAINT odonto_clinicas FOREIGN KEY ( id_clinica )
         REFERENCES clinicas ( id_clinica );
+
+ALTER TABLE paciente_odontologia
+    ADD CONSTRAINT odonto_medico FOREIGN KEY ( id_medico )
+        REFERENCES especialidad_medico ( id_medico );
 
 ALTER TABLE paciente_odontologia
     ADD CONSTRAINT odonto_persona FOREIGN KEY ( id_persona )
