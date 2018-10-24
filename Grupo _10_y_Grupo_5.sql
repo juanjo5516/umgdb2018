@@ -1,543 +1,764 @@
-CREATE TABLE "CITA" (
-"ID_CITA" NUMBER NOT NULL,
-"ID_SEGURO" NUMBER NULL,
-"CITA" VARCHAR2(30 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007253" PRIMARY KEY ("ID_CITA") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "CITA" ADD CONSTRAINT "SYS_C007252" CHECK ("ID_CITA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "CITA_PACIENTE" (
-"ID_CITA" NUMBER NOT NULL,
-"ID_PACIENTE" NUMBER NOT NULL,
-CONSTRAINT "SYS_C007256" PRIMARY KEY ("ID_CITA") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "CITA_PACIENTE" ADD CONSTRAINT "SYS_C007254" CHECK ("ID_CITA" IS NOT NULL) ENABLE;
-ALTER TABLE "CITA_PACIENTE" ADD CONSTRAINT "SYS_C007255" CHECK ("ID_PACIENTE" IS NOT NULL) ENABLE;
-
-CREATE TABLE "COLONIA" (
-"ID_COLONIA" NUMBER NOT NULL,
-"ID_MUNICIPIO" NUMBER NULL,
-"COLONIA" VARCHAR2(30 BYTE) NULL,
-"CALLE" VARCHAR2(30 BYTE) NULL,
-"EDIFICIO" VARCHAR2(30 BYTE) NULL,
-CONSTRAINT "SYS_C007258" PRIMARY KEY ("ID_COLONIA") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "COLONIA" ADD CONSTRAINT "SYS_C007257" CHECK ("ID_COLONIA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "COMPANIA_TELEFONO" (
-"ID_COMPANIA" NUMBER NOT NULL,
-"COMPANIA" VARCHAR2(20 BYTE) NULL,
-CONSTRAINT "SYS_C007260" PRIMARY KEY ("ID_COMPANIA") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "COMPANIA_TELEFONO" ADD CONSTRAINT "SYS_C007259" CHECK ("ID_COMPANIA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "DEPARTAMENTO" (
-"ID_DEPARTAMENTO" NUMBER NOT NULL,
-"ID_PAIS" NUMBER NULL,
-"DEPARTAMENTO" VARCHAR2(50 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007262" PRIMARY KEY ("ID_DEPARTAMENTO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "DEPARTAMENTO" ADD CONSTRAINT "SYS_C007261" CHECK ("ID_DEPARTAMENTO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "DIRECCION" (
-"ID_DIRECCION" NUMBER NOT NULL,
-"ID_COLONIA" NUMBER NULL,
-"ID_ZONA" NUMBER NULL,
-"ID_MUNICIPIO" NUMBER NULL,
-"FECHA_REGISTRO" DATE NULL,
-"CALLE_AVENIDA" VARCHAR2(30 BYTE) NULL,
-CONSTRAINT "SYS_C007264" PRIMARY KEY ("ID_DIRECCION") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "DIRECCION" ADD CONSTRAINT "SYS_C007263" CHECK ("ID_DIRECCION" IS NOT NULL) ENABLE;
-
-CREATE TABLE "DIRECCION_PERSONA" (
-"ID_DIRECCION" NUMBER NOT NULL,
-"ID_PERSONA" NUMBER NOT NULL,
-CONSTRAINT "SYS_C007267" PRIMARY KEY ("ID_DIRECCION") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "DIRECCION_PERSONA" ADD CONSTRAINT "SYS_C007265" CHECK ("ID_DIRECCION" IS NOT NULL) ENABLE;
-ALTER TABLE "DIRECCION_PERSONA" ADD CONSTRAINT "SYS_C007266" CHECK ("ID_PERSONA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "DOCUMENTO_PERSONA" (
-"ID_TIPO_DOCUMENTO" NUMBER NOT NULL,
-"ID_PERSONA" NUMBER NOT NULL,
-CONSTRAINT "SYS_C007270" PRIMARY KEY ("ID_TIPO_DOCUMENTO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "DOCUMENTO_PERSONA" ADD CONSTRAINT "SYS_C007268" CHECK ("ID_TIPO_DOCUMENTO" IS NOT NULL) ENABLE;
-ALTER TABLE "DOCUMENTO_PERSONA" ADD CONSTRAINT "SYS_C007269" CHECK ("ID_PERSONA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "ENFERMEDAD" (
-"ID_ENFERMEDAD" NUMBER NOT NULL,
-"ID_TIPO_ENFERMEDAD" NUMBER NULL,
-"ENFERMEDAD" VARCHAR2(50 BYTE) NULL,
-"USUARIO_REGISTRO" VARCHAR2(30 BYTE) NULL,
-"PADECIMIENTOS" VARCHAR2(50 BYTE) NULL,
-CONSTRAINT "SYS_C007272" PRIMARY KEY ("ID_ENFERMEDAD") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "ENFERMEDAD" ADD CONSTRAINT "SYS_C007271" CHECK ("ID_ENFERMEDAD" IS NOT NULL) ENABLE;
-
-CREATE TABLE "ESPECIALIDAD" (
-"ID_ESPECIALIDAD" NUMBER NOT NULL,
-"ID_TIPO_ESPECIALIDAD" NUMBER NULL,
-"ESPECIALIDAD" VARCHAR2(50 BYTE) NULL,
-CONSTRAINT "SYS_C007274" PRIMARY KEY ("ID_ESPECIALIDAD") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "ESPECIALIDAD" ADD CONSTRAINT "SYS_C007273" CHECK ("ID_ESPECIALIDAD" IS NOT NULL) ENABLE;
-
-CREATE TABLE "ESPECIALIDAD_PACIENTE" (
-"ID_PACIENTE" NUMBER NOT NULL,
-"ID_ESPECIALIDAD" NUMBER NOT NULL,
-CONSTRAINT "SYS_C007277" PRIMARY KEY ("ID_PACIENTE") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "ESPECIALIDAD_PACIENTE" ADD CONSTRAINT "SYS_C007275" CHECK ("ID_PACIENTE" IS NOT NULL) ENABLE;
-ALTER TABLE "ESPECIALIDAD_PACIENTE" ADD CONSTRAINT "SYS_C007276" CHECK ("ID_ESPECIALIDAD" IS NOT NULL) ENABLE;
-
-CREATE TABLE "HISTORIAL_CLINICO" (
-"ID_HISTORIAL_CLINICO" NUMBER NOT NULL,
-"ID_TIPO_SANGRE" NUMBER NULL,
-"ID_ENFERMEDAD" NUMBER NULL,
-"ID_ESPECIALIDAD" NUMBER NULL,
-"ID_SUSPENSION" NUMBER NULL,
-"VIA_INGRESO" VARCHAR2(30 BYTE) NULL,
-"USUARIO_REGISTRO" VARCHAR2(30 BYTE) NULL,
-"CLINICA" VARCHAR2(50 BYTE) NULL,
-"MOTIVO" VARCHAR2(100 BYTE) NULL,
-CONSTRAINT "SYS_C007279" PRIMARY KEY ("ID_HISTORIAL_CLINICO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "HISTORIAL_CLINICO" ADD CONSTRAINT "SYS_C007278" CHECK ("ID_HISTORIAL_CLINICO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "MUNICIPIO" (
-"ID_MUNICIPIO" NUMBER NOT NULL,
-"ID_DEPARTAMENTO" NUMBER NULL,
-"ID_PAIS" NUMBER NULL,
-"MUNICIPIO" VARCHAR2(30 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007281" PRIMARY KEY ("ID_MUNICIPIO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "MUNICIPIO" ADD CONSTRAINT "SYS_C007280" CHECK ("ID_MUNICIPIO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "PACIENTE" (
-"ID_PACIENTE" NUMBER NOT NULL,
-"ID_PERSONA" NUMBER NULL,
-"ID_SEGURO" NUMBER NULL,
-"FECHA_INGRESO" DATE NULL,
-"ANTECEDENTES_MEDICOS" VARCHAR2(50 BYTE) NULL,
-"ALTURA" NUMBER(5,0) NULL,
-"PESO_ACTUAL" NUMBER(4,0) NULL,
-"PESO_ANTERIOR" NUMBER(4,0) NULL,
-"MEDIDA_CINTURA" NUMBER(4,0) NULL,
-"MASA_MUSCULAR" NUMBER(4,0) NULL,
-"PRESION_ARTERIAL" NUMBER(4,0) NULL,
-CONSTRAINT "SYS_C007283" PRIMARY KEY ("ID_PACIENTE") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "PACIENTE" ADD CONSTRAINT "SYS_C007282" CHECK ("ID_PACIENTE" IS NOT NULL) ENABLE;
-
-CREATE TABLE "PACIENTE_HISTORIAL" (
-"ID_HISOTORIAL_CLINICO" NUMBER NOT NULL,
-"ID_PACIENTE" NUMBER NOT NULL,
-CONSTRAINT "SYS_C007286" PRIMARY KEY ("ID_HISOTORIAL_CLINICO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "PACIENTE_HISTORIAL" ADD CONSTRAINT "SYS_C007284" CHECK ("ID_HISOTORIAL_CLINICO" IS NOT NULL) ENABLE;
-ALTER TABLE "PACIENTE_HISTORIAL" ADD CONSTRAINT "SYS_C007285" CHECK ("ID_PACIENTE" IS NOT NULL) ENABLE;
-
-CREATE TABLE "PAIS" (
-"ID_PAIS" NUMBER NOT NULL,
-"PAIS" VARCHAR2(30 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007288" PRIMARY KEY ("ID_PAIS") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "PAIS" ADD CONSTRAINT "SYS_C007287" CHECK ("ID_PAIS" IS NOT NULL) ENABLE;
-
-CREATE TABLE "PERSONA" (
-"ID_PERSONA" NUMBER NOT NULL,
-"PRIMER_NOMBRE" VARCHAR2(30 BYTE) NULL,
-"SEGUNDO_NOMBRE" VARCHAR2(30 BYTE) NULL,
-"PRIMER_APELLIDO" VARCHAR2(30 BYTE) NULL,
-"SEGUNDO_APELLIDO" VARCHAR2(30 BYTE) NULL,
-"APELLIDO_CASADA" VARCHAR2(30 BYTE) NULL,
-"FECHA_NACIMIENTO" DATE NULL,
-"EDAD" NUMBER(3,0) NULL,
-"GENERO" VARCHAR2(1 BYTE) NULL,
-CONSTRAINT "SYS_C007290" PRIMARY KEY ("ID_PERSONA") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "PERSONA" ADD CONSTRAINT "SYS_C007289" CHECK ("ID_PERSONA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "SEGURO" (
-"ID_SEGURO" NUMBER NOT NULL,
-"ID_TIPO_SEGURO" NUMBER NULL,
-"SEGURO" VARCHAR2(30 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007292" PRIMARY KEY ("ID_SEGURO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "SEGURO" ADD CONSTRAINT "SYS_C007291" CHECK ("ID_SEGURO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "SUSPENSION_MEDICA" (
-"ID_SUSPENSION" NUMBER NOT NULL,
-"ID_TIPO_SUSPENSION" NUMBER NULL,
-"SUSPENSION" VARCHAR2(50 BYTE) NULL,
-"USUARIO_REGISTRO" VARCHAR2(30 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007294" PRIMARY KEY ("ID_SUSPENSION") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "SUSPENSION_MEDICA" ADD CONSTRAINT "SYS_C007293" CHECK ("ID_SUSPENSION" IS NOT NULL) ENABLE;
-
-CREATE TABLE "SUSPENSION_PACIENTE" (
-"ID_SUSPENSION" NUMBER NULL,
-"ID_PACIENTE" NUMBER NULL
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-CREATE TABLE "TELEFONO" (
-"ID_TELEFONO" NUMBER NOT NULL,
-"ID_TIPO_TELEFONO" NUMBER NULL,
-"ID_COMPANIA" NUMBER NULL,
-"TELEFONO" NUMBER(15,0) NULL,
-CONSTRAINT "SYS_C007296" PRIMARY KEY ("ID_TELEFONO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TELEFONO" ADD CONSTRAINT "SYS_C007295" CHECK ("ID_TELEFONO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TELEFONO_PERSONA" (
-"ID_TELEFONO" NUMBER NOT NULL,
-"ID_PERSONA" NUMBER NOT NULL
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TELEFONO_PERSONA" ADD CONSTRAINT "SYS_C007297" CHECK ("ID_TELEFONO" IS NOT NULL) ENABLE;
-ALTER TABLE "TELEFONO_PERSONA" ADD CONSTRAINT "SYS_C007298" CHECK ("ID_PERSONA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TIPO_DOCUMENTO" (
-"ID_TIPO_DOCUMENTO" NUMBER NOT NULL,
-"DOCUMENTO" VARCHAR2(30 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-"USUARIO_REGISTRO" VARCHAR2(30 BYTE) NULL,
-CONSTRAINT "SYS_C007300" PRIMARY KEY ("ID_TIPO_DOCUMENTO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TIPO_DOCUMENTO" ADD CONSTRAINT "SYS_C007299" CHECK ("ID_TIPO_DOCUMENTO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TIPO_ENFERMEDAD" (
-"ID_TIPO_ENFERMEDAD" NUMBER NOT NULL,
-"TIPO_ENFERMEDAD" VARCHAR2(50 BYTE) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007302" PRIMARY KEY ("ID_TIPO_ENFERMEDAD") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TIPO_ENFERMEDAD" ADD CONSTRAINT "SYS_C007301" CHECK ("ID_TIPO_ENFERMEDAD" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TIPO_ESPECIALIDAD" (
-"ID_TIPO_ESPECIALIDAD" NUMBER NOT NULL,
-"TIPO_ESPECIALIDAD" VARCHAR2(30 BYTE) NULL,
-"DESCRIPCION" VARCHAR2(30 BYTE) NULL,
-CONSTRAINT "SYS_C007304" PRIMARY KEY ("ID_TIPO_ESPECIALIDAD") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TIPO_ESPECIALIDAD" ADD CONSTRAINT "SYS_C007303" CHECK ("ID_TIPO_ESPECIALIDAD" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TIPO_SANGRE" (
-"ID_TIPO_SANGRE" NUMBER NOT NULL,
-"TIPO_SANGRE" VARCHAR2(10 BYTE) NULL,
-"USUARIO_REGISTRO" VARCHAR2(30 BYTE) NULL,
-CONSTRAINT "SYS_C007306" PRIMARY KEY ("ID_TIPO_SANGRE") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TIPO_SANGRE" ADD CONSTRAINT "SYS_C007305" CHECK ("ID_TIPO_SANGRE" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TIPO_SEGURO" (
-"ID_TIPO_SEGURO" NUMBER NOT NULL,
-"TIPO_SEGURO" VARCHAR2(30 BYTE) NULL,
-CONSTRAINT "SYS_C007308" PRIMARY KEY ("ID_TIPO_SEGURO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TIPO_SEGURO" ADD CONSTRAINT "SYS_C007307" CHECK ("ID_TIPO_SEGURO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TIPO_SUSPENSION" (
-"ID_TIPO_SUSPENSION" NUMBER NOT NULL,
-"TIPO_SUSPENSION" VARCHAR2(50 BYTE) NULL,
-CONSTRAINT "SYS_C007310" PRIMARY KEY ("ID_TIPO_SUSPENSION") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TIPO_SUSPENSION" ADD CONSTRAINT "SYS_C007309" CHECK ("ID_TIPO_SUSPENSION" IS NOT NULL) ENABLE;
-
-CREATE TABLE "TIPO_TELEFONO" (
-"ID_TIPO_TELEFONO" NUMBER NOT NULL,
-"TIPO_TELEFONO" VARCHAR2(50 BYTE) NULL,
-CONSTRAINT "SYS_C007312" PRIMARY KEY ("ID_TIPO_TELEFONO") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "TIPO_TELEFONO" ADD CONSTRAINT "SYS_C007311" CHECK ("ID_TIPO_TELEFONO" IS NOT NULL) ENABLE;
-
-CREATE TABLE "ZONA" (
-"ID_ZONA" NUMBER NOT NULL,
-"ID_MUNICIPIO" NUMBER NULL,
-"ZONA" NUMBER(2,0) NULL,
-"FECHA_REGISTRO" DATE NULL,
-CONSTRAINT "SYS_C007314" PRIMARY KEY ("ID_ZONA") 
-)
-TABLESPACE USERS
-LOGGING
-NOCOMPRESS 
-NOCACHE
-NOPARALLEL ;
-
-ALTER TABLE "ZONA" ADD CONSTRAINT "SYS_C007313" CHECK ("ID_ZONA" IS NOT NULL) ENABLE;
-
-CREATE TABLE "PACIENTE_ODONTOLOGIA" (
-"ID_PACIENTE_ODONTOLOGIA" NUMERIC(5,0) NOT NULL,
-"ID_PACIENTE" NUMERIC(5,0) NOT NULL,
-"ID_MEDICO" NUMERIC(5,0) NOT NULL,
-"ID_CLINICA" NUMERIC(5,0) NOT NULL,
-PRIMARY KEY ("ID_PACIENTE", "ID_MEDICO", "ID_CLINICA", "ID_PACIENTE_ODONTOLOGIA") 
-)
-NOCOMPRESS 
-NOPARALLEL ;
-
-CREATE TABLE "MEDICO" (
-"ID_MEDICO" NUMERIC(5,0) NOT NULL,
-"ID_PERSONA" NUMBER NOT NULL,
-"FECHA_INGRESO" DATE NOT NULL,
-PRIMARY KEY ("ID_MEDICO", "ID_PERSONA") 
-)
-NOCOMPRESS 
-NOPARALLEL ;
-
-CREATE TABLE "CLINICA" (
-"ID_CLINICA" NUMERIC(5,0) NOT NULL,
-"ID_DIRECCION" NUMERIC(5,0) NOT NULL,
-"DESCRIPCION" VARCHAR2(2555) NULL,
-PRIMARY KEY ("ID_CLINICA", "ID_DIRECCION") 
-)
-NOCOMPRESS 
-NOPARALLEL ;
-
-CREATE TABLE "DIAGNOSTICO" (
-"ID_DIAGNOSTICO" NUMERIC(5,0) NOT NULL,
-"ID_PACIENTE" NUMERIC(5,0) NOT NULL,
-"ID_HISTORIAL_CLINICO" NUMBER NOT NULL,
-"DIAGNOSTICO" VARCHAR2(255) NULL,
-"FECHA_REGISTRO" DATE NULL,
-"ID_ENFERMEDAD" NUMBER NOT NULL,
-PRIMARY KEY ("ID_DIAGNOSTICO", "ID_PACIENTE", "ID_HISTORIAL_CLINICO", "ID_ENFERMEDAD") 
-)
-NOCOMPRESS 
-NOPARALLEL ;
-
-CREATE TABLE "ESPECIALIDAD_MEDICO" (
-"ID_MEDICO" NUMERIC(5,0) NOT NULL,
-"ID_ESPECIALIDAD" NUMBER NOT NULL,
-"FECHA_REGISTRO" DATE NULL,
-PRIMARY KEY ("ID_MEDICO", "ID_ESPECIALIDAD") 
-)
-NOCOMPRESS 
-NOPARALLEL ;
-
-
-ALTER TABLE "CITA" ADD CONSTRAINT "FK_CITA_REFERENCE_SEGURO" FOREIGN KEY ("ID_SEGURO") REFERENCES "SEGURO" ("ID_SEGURO");
-ALTER TABLE "CITA_PACIENTE" ADD CONSTRAINT "FK_CITA_PAC_REFERENCE_CITA" FOREIGN KEY ("ID_CITA") REFERENCES "CITA" ("ID_CITA");
-ALTER TABLE "CITA_PACIENTE" ADD CONSTRAINT "FK_CITA_PAC_REFERENCE_PACIENTE" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE" ("ID_PACIENTE");
-ALTER TABLE "COLONIA" ADD CONSTRAINT "FK_COLONIA_REFERENCE_MUNICIPI" FOREIGN KEY ("ID_MUNICIPIO") REFERENCES "MUNICIPIO" ("ID_MUNICIPIO");
-ALTER TABLE "DEPARTAMENTO" ADD CONSTRAINT "FK_DEPARTAM_REFERENCE_PAIS" FOREIGN KEY ("ID_PAIS") REFERENCES "PAIS" ("ID_PAIS");
-ALTER TABLE "DIRECCION" ADD CONSTRAINT "FK_DIRECCIO_REFERENCE_COLONIA" FOREIGN KEY ("ID_COLONIA") REFERENCES "COLONIA" ("ID_COLONIA");
-ALTER TABLE "DIRECCION" ADD CONSTRAINT "FK_DIRECCIO_REFERENCE_MUNICIPI" FOREIGN KEY ("ID_MUNICIPIO") REFERENCES "MUNICIPIO" ("ID_MUNICIPIO");
-ALTER TABLE "DIRECCION" ADD CONSTRAINT "FK_DIRECCIO_REFERENCE_ZONA" FOREIGN KEY ("ID_ZONA") REFERENCES "ZONA" ("ID_ZONA");
-ALTER TABLE "DIRECCION_PERSONA" ADD CONSTRAINT "FK_DIRECCIO_REFERENCE_DIRECCIO" FOREIGN KEY ("ID_DIRECCION") REFERENCES "DIRECCION" ("ID_DIRECCION");
-ALTER TABLE "DIRECCION_PERSONA" ADD CONSTRAINT "FK_DIRECCIO_REFERENCE_PERSONA" FOREIGN KEY ("ID_PERSONA") REFERENCES "PERSONA" ("ID_PERSONA");
-ALTER TABLE "DOCUMENTO_PERSONA" ADD CONSTRAINT "FK_DOCUMENT_REFERENCE_PERSONA" FOREIGN KEY ("ID_PERSONA") REFERENCES "PERSONA" ("ID_PERSONA");
-ALTER TABLE "DOCUMENTO_PERSONA" ADD CONSTRAINT "FK_DOCUMENT_REFERENCE_TIPO_DOC" FOREIGN KEY ("ID_TIPO_DOCUMENTO") REFERENCES "TIPO_DOCUMENTO" ("ID_TIPO_DOCUMENTO");
-ALTER TABLE "ENFERMEDAD" ADD CONSTRAINT "FK_ENFERMED_REFERENCE_TIPO_ENF" FOREIGN KEY ("ID_TIPO_ENFERMEDAD") REFERENCES "TIPO_ENFERMEDAD" ("ID_TIPO_ENFERMEDAD");
-ALTER TABLE "ESPECIALIDAD" ADD CONSTRAINT "FK_ESPECIAL_REFERENCE_TIPO_ESP" FOREIGN KEY ("ID_TIPO_ESPECIALIDAD") REFERENCES "TIPO_ESPECIALIDAD" ("ID_TIPO_ESPECIALIDAD");
-ALTER TABLE "ESPECIALIDAD_PACIENTE" ADD CONSTRAINT "FK_ESPECIAL_REFERENCE_ESPECIAL" FOREIGN KEY ("ID_ESPECIALIDAD") REFERENCES "ESPECIALIDAD" ("ID_ESPECIALIDAD");
-ALTER TABLE "ESPECIALIDAD_PACIENTE" ADD CONSTRAINT "FK_ESPECIAL_REFERENCE_PACIENTE" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE" ("ID_PACIENTE");
-ALTER TABLE "HISTORIAL_CLINICO" ADD CONSTRAINT "FK_HISTORIA_REFERENCE_ENFERMED" FOREIGN KEY ("ID_ENFERMEDAD") REFERENCES "ENFERMEDAD" ("ID_ENFERMEDAD");
-ALTER TABLE "HISTORIAL_CLINICO" ADD CONSTRAINT "FK_HISTORIA_REFERENCE_ESPECIAL" FOREIGN KEY ("ID_ESPECIALIDAD") REFERENCES "ESPECIALIDAD" ("ID_ESPECIALIDAD");
-ALTER TABLE "HISTORIAL_CLINICO" ADD CONSTRAINT "FK_HISTORIA_REFERENCE_SUSPENSI" FOREIGN KEY ("ID_SUSPENSION") REFERENCES "SUSPENSION_MEDICA" ("ID_SUSPENSION");
-ALTER TABLE "HISTORIAL_CLINICO" ADD CONSTRAINT "FK_HISTORIA_REFERENCE_TIPO_SAN" FOREIGN KEY ("ID_TIPO_SANGRE") REFERENCES "TIPO_SANGRE" ("ID_TIPO_SANGRE");
-ALTER TABLE "MUNICIPIO" ADD CONSTRAINT "FK_MUNICIPI_REFERENCE_DEPARTAM" FOREIGN KEY ("ID_DEPARTAMENTO") REFERENCES "DEPARTAMENTO" ("ID_DEPARTAMENTO");
-ALTER TABLE "MUNICIPIO" ADD CONSTRAINT "FK_MUNICIPI_REFERENCE_PAIS" FOREIGN KEY ("ID_PAIS") REFERENCES "PAIS" ("ID_PAIS");
-ALTER TABLE "PACIENTE" ADD CONSTRAINT "FK_PACIENTE_REFERENCE_PERSONA" FOREIGN KEY ("ID_PERSONA") REFERENCES "PERSONA" ("ID_PERSONA");
-ALTER TABLE "PACIENTE" ADD CONSTRAINT "FK_PACIENTE_REFERENCE_SEGURO" FOREIGN KEY ("ID_SEGURO") REFERENCES "SEGURO" ("ID_SEGURO");
-ALTER TABLE "PACIENTE_HISTORIAL" ADD CONSTRAINT "FK_PACIENTE_REFERENCE_HISTORIA" FOREIGN KEY ("ID_HISOTORIAL_CLINICO") REFERENCES "HISTORIAL_CLINICO" ("ID_HISTORIAL_CLINICO");
-ALTER TABLE "PACIENTE_HISTORIAL" ADD CONSTRAINT "FK_PACIENTE_REFERENCE_PACIENTE" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE" ("ID_PACIENTE");
-ALTER TABLE "SEGURO" ADD CONSTRAINT "FK_SEGURO_REFERENCE_TIPO_SEG" FOREIGN KEY ("ID_TIPO_SEGURO") REFERENCES "TIPO_SEGURO" ("ID_TIPO_SEGURO");
-ALTER TABLE "SUSPENSION_MEDICA" ADD CONSTRAINT "FK_SUSPENSI_REFERENCE_TIPO_SUS" FOREIGN KEY ("ID_TIPO_SUSPENSION") REFERENCES "TIPO_SUSPENSION" ("ID_TIPO_SUSPENSION");
-ALTER TABLE "SUSPENSION_PACIENTE" ADD CONSTRAINT "FK_SUSPENSI_REFERENCE_PACIENTE" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE" ("ID_PACIENTE");
-ALTER TABLE "SUSPENSION_PACIENTE" ADD CONSTRAINT "FK_SUSPENSI_REFERENCE_SUSPENSI" FOREIGN KEY ("ID_SUSPENSION") REFERENCES "SUSPENSION_MEDICA" ("ID_SUSPENSION");
-ALTER TABLE "TELEFONO" ADD CONSTRAINT "FK_TELEFONO_REFERENCE_COMPANIA" FOREIGN KEY ("ID_COMPANIA") REFERENCES "COMPANIA_TELEFONO" ("ID_COMPANIA");
-ALTER TABLE "TELEFONO" ADD CONSTRAINT "FK_TELEFONO_REFERENCE_TIPO_TEL" FOREIGN KEY ("ID_TIPO_TELEFONO") REFERENCES "TIPO_TELEFONO" ("ID_TIPO_TELEFONO");
-ALTER TABLE "TELEFONO_PERSONA" ADD CONSTRAINT "FK_TELEFONO_REFERENCE_PERSONA" FOREIGN KEY ("ID_PERSONA") REFERENCES "PERSONA" ("ID_PERSONA");
-ALTER TABLE "TELEFONO_PERSONA" ADD CONSTRAINT "FK_TELEFONO_REFERENCE_TELEFONO" FOREIGN KEY ("ID_TELEFONO") REFERENCES "TELEFONO" ("ID_TELEFONO");
-ALTER TABLE "ZONA" ADD CONSTRAINT "FK_ZONA_REFERENCE_MUNICIPI" FOREIGN KEY ("ID_MUNICIPIO") REFERENCES "MUNICIPIO" ("ID_MUNICIPIO");
-ALTER TABLE "CLINICA" ADD CONSTRAINT "FK_CLINICA_CLINICA_1" FOREIGN KEY ("ID_DIRECCION") REFERENCES "DIRECCION_PERSONA" ("ID_DIRECCION") ON DELETE CASCADE;
-ALTER TABLE "PACIENTE_ODONTOLOGIA" ADD CONSTRAINT "FK_PACIENTE_ODONTOLOGIA_PACIENTE_ODONTOLOGIA_1" FOREIGN KEY ("ID_CLINICA") REFERENCES "CLINICA" ("ID_CLINICA") ON DELETE CASCADE;
-ALTER TABLE "PACIENTE_ODONTOLOGIA" ADD CONSTRAINT "FK_PACIENTE_ODONTOLOGIA_PACIENTE_ODONTOLOGIA_2" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE" ("ID_PACIENTE") ON DELETE CASCADE;
-ALTER TABLE "PACIENTE_ODONTOLOGIA" ADD CONSTRAINT "FK_PACIENTE_ODONTOLOGIA_PACIENTE_ODONTOLOGIA_3" FOREIGN KEY ("ID_MEDICO") REFERENCES "MEDICO" ("ID_MEDICO") ON DELETE CASCADE;
-ALTER TABLE "ESPECIALIDAD_MEDICO" ADD CONSTRAINT "FK_ESPECIALIDAD_MEDICO_ESPECIALIDAD_MEDICO_1" FOREIGN KEY ("ID_MEDICO") REFERENCES "MEDICO" ("ID_MEDICO") ON DELETE CASCADE;
-ALTER TABLE "ESPECIALIDAD_MEDICO" ADD CONSTRAINT "FK_ESPECIALIDAD_MEDICO_ESPECIALIDAD_MEDICO_2" FOREIGN KEY ("ID_ESPECIALIDAD") REFERENCES "ESPECIALIDAD" ("ID_ESPECIALIDAD") ON DELETE CASCADE;
-ALTER TABLE "DIAGNOSTICO" ADD CONSTRAINT "FK_DIAGNOSTICO_DIAGNOSTICO_1" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE_ODONTOLOGIA" ("ID_PACIENTE_ODONTOLOGIA") ON DELETE CASCADE;
-ALTER TABLE "DIAGNOSTICO" ADD CONSTRAINT "FK_DIAGNOSTICO_DIAGNOSTICO_2" FOREIGN KEY ("ID_HISTORIAL_CLINICO") REFERENCES "HISTORIAL_CLINICO" ("ID_HISTORIAL_CLINICO") ON DELETE CASCADE;
-ALTER TABLE "DIAGNOSTICO" ADD CONSTRAINT "FK_DIAGNOSTICO_DIAGNOSTICO_3" FOREIGN KEY ("ID_ENFERMEDAD") REFERENCES "ENFERMEDAD" ("ID_ENFERMEDAD") ON DELETE CASCADE;
-
+/*==============================================================*/
+/* Table: CITA                                                  */
+/*==============================================================*/
+create table CITA
+(
+   ID_CITA              integer                        not null,
+   ID_SEGURO            integer                        null,
+   CITA                 varchar(30)                    null,
+   FECHA_REGISTRO       date                           null,
+   USUARIO_REGISTRO     varchar(25)                    null,
+   FECHA_CITA           date                           null,
+   HORA_CITA            time                           null,
+   constraint PK_CITA primary key clustered (ID_CITA)
+);
+
+/*==============================================================*/
+/* Table: CITA_PERSONA                                          */
+/*==============================================================*/
+create table CITA_PERSONA
+(
+   ID_CITA              integer                        not null,
+   ID_PERSONA           integer                        not null,
+   constraint PK_CITA_PERSONA primary key clustered (ID_CITA, ID_PERSONA)
+);
+
+/*==============================================================*/
+/* Table: COLONIA                                               */
+/*==============================================================*/
+create table COLONIA
+(
+   ID_COLONIA           integer                        not null,
+   ID_MUNICIPIO         integer                        null,
+   COLONIA              varchar(30)                    null,
+   CALLE                varchar(30)                    null,
+   EDIFICIO             varchar(30)                    null,
+   constraint PK_COLONIA primary key clustered (ID_COLONIA)
+);
+
+/*==============================================================*/
+/* Table: COMPANIA_TELEFONO                                     */
+/*==============================================================*/
+create table COMPANIA_TELEFONO
+(
+   ID_COMPANIA          integer                        not null,
+   COMPANIA             varchar(20)                    null,
+   constraint PK_COMPANIA_TELEFONO primary key clustered (ID_COMPANIA)
+);
+
+/*==============================================================*/
+/* Table: DEPARTAMENTO                                          */
+/*==============================================================*/
+create table DEPARTAMENTO
+(
+   ID_DEPARTAMENTO      integer                        not null,
+   ID_PAIS              integer                        null,
+   DEPARTAMENTO         varchar(50)                    null,
+   FECHA_REGISTRO       date                           null,
+   constraint PK_DEPARTAMENTO primary key clustered (ID_DEPARTAMENTO)
+);
+
+/*==============================================================*/
+/* Table: DIRECCION                                             */
+/*==============================================================*/
+create table DIRECCION
+(
+   ID_DIRECCION         integer                        not null,
+   ID_ZONA              integer                        null,
+   ID_MUNICIPIO         integer                        null,
+   ID_DEPARTAMENTO      integer                        null,
+   FECHA_REGISTRO       date                           null,
+   CALLE_AVENIDA        varchar(30)                    null,
+   constraint PK_DIRECCION primary key clustered (ID_DIRECCION)
+);
+
+/*==============================================================*/
+/* Table: DIRECCION_PERSONA                                     */
+/*==============================================================*/
+create table DIRECCION_PERSONA
+(
+   ID_DIRECCION         integer                        not null,
+   ID_PERSONA           integer                        not null,
+   constraint PK_DIRECCION_PERSONA primary key clustered (ID_DIRECCION, ID_PERSONA)
+);
+
+/*==============================================================*/
+/* Table: DOCUMENTO_PERSONA                                     */
+/*==============================================================*/
+create table DOCUMENTO_PERSONA
+(
+   ID_TIPO_DOCUMENTO    integer                        not null,
+   ID_PERSONA           integer                        not null,
+   constraint PK_DOCUMENTO_PERSONA primary key clustered (ID_TIPO_DOCUMENTO, ID_PERSONA)
+);
+
+/*==============================================================*/
+/* Table: ENCARGADO_SEDE                                        */
+/*==============================================================*/
+create table ENCARGADO_SEDE
+(
+   ID_PERSONA           integer                        null,
+   ID_SEDE              INTEGER                        null,
+   ID_ENCARGADO_SEDE    char(10)                       null
+);
+
+/*==============================================================*/
+/* Table: ENFERMEDAD                                            */
+/*==============================================================*/
+create table ENFERMEDAD
+(
+   ID_ENFERMEDAD        integer                        not null,
+   ID_TIPO_ENFERMEDAD   integer                        null,
+   ENFERMEDAD           varchar(50)                    null,
+   USUARIO_REGISTRO     varchar(30)                    null,
+   DESCRIPCION          varchar(500)                   null,
+   SOLUCION             varchar(500)                   null,
+   FECHA_REGISTRO       date                           null,
+   constraint PK_ENFERMEDAD primary key clustered (ID_ENFERMEDAD)
+);
+
+/*==============================================================*/
+/* Table: EXAMENES                                              */
+/*==============================================================*/
+create table EXAMENES
+(
+   ID_EXAMEN            integer                        not null,
+   ID_ENFERMEDAD        integer                        null,
+   EXAMEN               varchar(100)                   null,
+   OBSERVACIONES        varchar(500)                   null,
+   constraint PK_EXAMENES primary key clustered (ID_EXAMEN)
+);
+
+/*==============================================================*/
+/* Table: EXAMEN_PERSONA                                        */
+/*==============================================================*/
+create table EXAMEN_PERSONA
+(
+   ID_PERSONA           integer                        not null,
+   ID_EXAMEN            integer                        not null,
+   constraint PK_EXAMEN_PERSONA primary key clustered (ID_PERSONA, ID_EXAMEN)
+);
+
+/*==============================================================*/
+/* Table: HISTORIAL_CLINICO                                     */
+/*==============================================================*/
+create table HISTORIAL_CLINICO
+(
+   ID_HISTORIAL_CLINICO integer                        not null,
+   ID_ENFERMEDAD        integer                        null,
+   ID_PERSONA           integer                        null,
+   VIA_INGRESO          varchar(30)                    null,
+   USUARIO_REGISTRO     varchar(30)                    null,
+   CLINICA              varchar(50)                    null,
+   OBSERVACIONES        varchar(1000)                  null,
+   FECHA_INGRESO        date                           null,
+   ALTURA               numeric(5)                     null,
+   PESO_ACTUAL          decimal(4)                     null,
+   PESO_ANTERIOR        decimal(4)                     null,
+   MEDIDA_CINTURA       numeric(4)                     null,
+   MASA_MUSCULAR        decimal(4)                     null,
+   PRESION_ARTERIAL     decimal(4)                     null,
+   FECHA_REGISTRO       date                           null,
+   constraint PK_HISTORIAL_CLINICO primary key clustered (ID_HISTORIAL_CLINICO)
+);
+
+/*==============================================================*/
+/* Table: MOVIMIENTOS_HISTORIAL                                 */
+/*==============================================================*/
+create table MOVIMIENTOS_HISTORIAL
+(
+   ID_MOVIMIENTO_HISTORIAL integer                        not null,
+   ID_ENFERMEDAD        integer                        null,
+   ID_EXAMEN            integer                        null,
+   ID_SUSPENSION        integer                        null,
+   FALLECIMIENTOS       varchar(50)                    null,
+   ALTAS                varchar(50)                    null,
+   ALTAS_FECHA          date                           null,
+   USUARIO_REGISTRO     varchar(50)                    null,
+   FECHA_REGISTRO       date                           null,
+   constraint PK_MOVIMIENTOS_HISTORIAL primary key clustered (ID_MOVIMIENTO_HISTORIAL)
+);
+
+/*==============================================================*/
+/* Table: MUNICIPIO                                             */
+/*==============================================================*/
+create table MUNICIPIO
+(
+   ID_MUNICIPIO         integer                        not null,
+   ID_DEPARTAMENTO      integer                        null,
+   MUNICIPIO            varchar(30)                    null,
+   FECHA_REGISTRO       date                           null,
+   constraint PK_MUNICIPIO primary key clustered (ID_MUNICIPIO)
+);
+
+/*==============================================================*/
+/* Table: PAIS                                                  */
+/*==============================================================*/
+create table PAIS
+(
+   ID_PAIS              integer                        not null,
+   PAIS                 varchar(30)                    null,
+   FECHA_REGISTRO       date                           null,
+   constraint PK_PAIS primary key clustered (ID_PAIS)
+);
+
+/*==============================================================*/
+/* Table: PERSONA                                               */
+/*==============================================================*/
+create table PERSONA
+(
+   ID_PERSONA           integer                        not null,
+   ID_TELEFONO          integer                        null,
+   ID_SEGURO            integer                        null,
+   ID_TIPO_SANGRE       integer                        null,
+   ID_ROL               integer                        null,
+   PRIMER_NOMBRE        varchar(30)                    null,
+   SEGUNDO_NOMBRE       varchar(30)                    null,
+   PRIMER_APELLIDO      varchar(30)                    null,
+   SEGUNDO_APELLIDO     varchar(30)                    null,
+   APELLIDO_CASADA      varchar(30)                    null,
+   FECHA_NACIMIENTO     date                           null,
+   GENERO               varchar(1)                     null,
+   constraint PK_PERSONA primary key clustered (ID_PERSONA)
+);
+
+/*==============================================================*/
+/* Table: PERSONA_HISTORIAL                                     */
+/*==============================================================*/
+create table PERSONA_HISTORIAL
+(
+   ID_HISOTORIAL_CLINICO integer                        not null,
+   ID_PERSONA           integer                        not null,
+   constraint PK_PERSONA_HISTORIAL primary key clustered (ID_HISOTORIAL_CLINICO, ID_PERSONA)
+);
+
+/*==============================================================*/
+/* Table: ROL                                                   */
+/*==============================================================*/
+create table ROL
+(
+   ID_ROL               integer                        not null,
+   ROL                  varchar(100)                   null,
+   ESTADO               varchar(25)                    null,
+   USUARIO_REGISTRO     varchar(25)                    null,
+   FECHA_REGISTRO       date                           null,
+   constraint PK_ROL primary key clustered (ID_ROL)
+);
+
+/*==============================================================*/
+/* Table: SEDE                                                  */
+/*==============================================================*/
+create table SEDE
+(
+   ID_SEDE              INTEGER                        not null,
+   ID_DIRECCION         integer                        null,
+   NOMBRE               VARCHAR2(30)                   null,
+   constraint PK_SEDE primary key clustered (ID_SEDE)
+);
+
+/*==============================================================*/
+/* Table: SEGURO                                                */
+/*==============================================================*/
+create table SEGURO
+(
+   ID_SEGURO            integer                        not null,
+   ID_TIPO_SEGURO       integer                        null,
+   SEGURO               varchar(30)                    null,
+   FECHA_REGISTRO       date                           null,
+   VIGENCIA_SEGURO      date                           null,
+   constraint PK_SEGURO primary key clustered (ID_SEGURO)
+);
+
+/*==============================================================*/
+/* Table: SUSPENSION_MEDICA                                     */
+/*==============================================================*/
+create table SUSPENSION_MEDICA
+(
+   ID_SUSPENSION        integer                        not null,
+   ID_TIPO_SUSPENSION   integer                        null,
+   SUSPENSION           varchar(50)                    null,
+   USUARIO_REGISTRO     varchar(30)                    null,
+   FECHA_REGISTRO       date                           null,
+   MOTIVO               varchar(500)                   null,
+   constraint PK_SUSPENSION_MEDICA primary key clustered (ID_SUSPENSION)
+);
+
+/*==============================================================*/
+/* Table: SUSPENSION_PERSONA                                    */
+/*==============================================================*/
+create table SUSPENSION_PERSONA
+(
+   ID_SUSPENSION        integer                        not null,
+   ID_PERSONA           integer                        not null,
+   constraint PK_SUSPENSION_PERSONA primary key clustered (ID_SUSPENSION, ID_PERSONA)
+);
+
+/*==============================================================*/
+/* Table: TELEFONO                                              */
+/*==============================================================*/
+create table TELEFONO
+(
+   ID_TELEFONO          integer                        not null,
+   ID_TIPO_TELEFONO     integer                        null,
+   ID_COMPANIA          integer                        null,
+   TELEFONO             numeric(15)                    null,
+   constraint PK_TELEFONO primary key clustered (ID_TELEFONO)
+);
+
+/*==============================================================*/
+/* Table: TELEFONO_PERSONA                                      */
+/*==============================================================*/
+create table TELEFONO_PERSONA
+(
+   ID_TELEFONO          integer                        not null,
+   ID_PERSONA           integer                        not null,
+   constraint PK_TELEFONO_PERSONA primary key clustered (ID_TELEFONO, ID_PERSONA)
+);
+
+/*==============================================================*/
+/* Table: TIPO_DOCUMENTO                                        */
+/*==============================================================*/
+create table TIPO_DOCUMENTO
+(
+   ID_TIPO_DOCUMENTO    integer                        not null,
+   DOCUMENTO            varchar(30)                    null,
+   FECHA_REGISTRO       date                           null,
+   USUARIO_REGISTRO     varchar(30)                    null,
+   ESTADO               varchar(25)                    null,
+   constraint PK_TIPO_DOCUMENTO primary key clustered (ID_TIPO_DOCUMENTO)
+);
+
+/*==============================================================*/
+/* Table: TIPO_ENFERMEDAD                                       */
+/*==============================================================*/
+create table TIPO_ENFERMEDAD
+(
+   ID_TIPO_ENFERMEDAD   integer                        not null,
+   TIPO_ENFERMEDAD      varchar(50)                    null,
+   FECHA_REGISTRO       date                           null,
+   USUARIO_REGISTRO     varchar(50)                    null,
+   ESTADO               varchar(50)                    null,
+   constraint PK_TIPO_ENFERMEDAD primary key clustered (ID_TIPO_ENFERMEDAD)
+);
+
+/*==============================================================*/
+/* Table: TIPO_SANGRE                                           */
+/*==============================================================*/
+create table TIPO_SANGRE
+(
+   ID_TIPO_SANGRE       integer                        not null,
+   TIPO_SANGRE          varchar(10)                    null,
+   USUARIO_REGISTRO     varchar(30)                    null,
+   constraint PK_TIPO_SANGRE primary key clustered (ID_TIPO_SANGRE)
+);
+
+/*==============================================================*/
+/* Table: TIPO_SEGURO                                           */
+/*==============================================================*/
+create table TIPO_SEGURO
+(
+   ID_TIPO_SEGURO       integer                        not null,
+   TIPO_SEGURO          varchar(30)                    null,
+   constraint PK_TIPO_SEGURO primary key clustered (ID_TIPO_SEGURO)
+);
+
+/*==============================================================*/
+/* Table: TIPO_SUSPENSION                                       */
+/*==============================================================*/
+create table TIPO_SUSPENSION
+(
+   ID_TIPO_SUSPENSION   integer                        not null,
+   TIPO_SUSPENSION      varchar(50)                    null,
+   constraint PK_TIPO_SUSPENSION primary key clustered (ID_TIPO_SUSPENSION)
+);
+
+/*==============================================================*/
+/* Table: TIPO_TELEFONO                                         */
+/*==============================================================*/
+create table TIPO_TELEFONO
+(
+   ID_TIPO_TELEFONO     integer                        not null,
+   TIPO_TELEFONO        varchar(50)                    null,
+   constraint PK_TIPO_TELEFONO primary key clustered (ID_TIPO_TELEFONO)
+);
+
+/*==============================================================*/
+/* Table: ZONAS                                                 */
+/*==============================================================*/
+create table ZONAS
+(
+   ID_ZONA              integer                        not null,
+   ID_COLONIA           integer                        null,
+   ZONA                 numeric(2)                     null,
+   FECHA_REGISTRO       date                           null,
+   USUARIO_REGISTRO     varchar(25)                    null,
+   constraint PK_ZONAS primary key clustered (ID_ZONA)
+);
+
+
+
+
+
+/*==============================================================*/
+/* Grupo 10                                                     */
+/*==============================================================*/
+
+
+CREATE TABLE "PACIENTE_ODONTOLOGIA" (
+
+"ID_PACIENTE_ODONTOLOGIA" NUMERIC(5,0) NOT NULL,
+
+"ID_PACIENTE" NUMERIC(5,0) NOT NULL,
+
+"ID_MEDICO" NUMERIC(5,0) NOT NULL,
+
+"ID_CLINICA" NUMERIC(5,0) NOT NULL,
+
+PRIMARY KEY ("ID_PACIENTE", "ID_MEDICO", "ID_CLINICA", "ID_PACIENTE_ODONTOLOGIA")
+
+)
+
+NOCOMPRESS
+
+NOPARALLEL ;
+
+
+
+CREATE TABLE "MEDICO" (
+
+"ID_MEDICO" NUMERIC(5,0) NOT NULL,
+
+"ID_PERSONA" NUMBER NOT NULL,
+
+"FECHA_INGRESO" DATE NOT NULL,
+
+PRIMARY KEY ("ID_MEDICO", "ID_PERSONA")
+
+)
+
+NOCOMPRESS
+
+NOPARALLEL ;
+
+
+
+CREATE TABLE "CLINICA" (
+
+"ID_CLINICA" NUMERIC(5,0) NOT NULL,
+
+"ID_DIRECCION" NUMERIC(5,0) NOT NULL,
+
+"DESCRIPCION" VARCHAR2(2555) NULL,
+
+PRIMARY KEY ("ID_CLINICA", "ID_DIRECCION")
+
+)
+
+NOCOMPRESS
+
+NOPARALLEL ;
+
+
+
+CREATE TABLE "DIAGNOSTICO" (
+
+"ID_DIAGNOSTICO" NUMERIC(5,0) NOT NULL,
+
+"ID_PACIENTE" NUMERIC(5,0) NOT NULL,
+
+"ID_HISTORIAL_CLINICO" NUMBER NOT NULL,
+
+"DIAGNOSTICO" VARCHAR2(255) NULL,
+
+"FECHA_REGISTRO" DATE NULL,
+
+"ID_ENFERMEDAD" NUMBER NOT NULL,
+
+PRIMARY KEY ("ID_DIAGNOSTICO", "ID_PACIENTE", "ID_HISTORIAL_CLINICO", "ID_ENFERMEDAD")
+
+)
+
+NOCOMPRESS
+
+NOPARALLEL ;
+
+
+
+CREATE TABLE "ESPECIALIDAD_MEDICO" (
+
+"ID_MEDICO" NUMERIC(5,0) NOT NULL,
+
+"ID_ESPECIALIDAD" NUMBER NOT NULL,
+
+"FECHA_REGISTRO" DATE NULL,
+
+PRIMARY KEY ("ID_MEDICO", "ID_ESPECIALIDAD")
+
+)
+
+NOCOMPRESS
+
+NOPARALLEL ;
+
+
+
+alter table CITA
+   add constraint FK_CITA_REFERENCE_SEGURO foreign key (ID_SEGURO)
+      references SEGURO (ID_SEGURO)
+      on update restrict
+      on delete restrict;
+
+alter table CITA_PERSONA
+   add constraint FK_CITA_PER_REFERENCE_CITA foreign key (ID_CITA)
+      references CITA (ID_CITA)
+      on update restrict
+      on delete restrict;
+
+alter table CITA_PERSONA
+   add constraint FK_CITA_PER_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table COLONIA
+   add constraint FK_COLONIA_REFERENCE_MUNICIPI foreign key (ID_MUNICIPIO)
+      references MUNICIPIO (ID_MUNICIPIO)
+      on update restrict
+      on delete restrict;
+
+alter table DEPARTAMENTO
+   add constraint FK_DEPARTAM_REFERENCE_PAIS foreign key (ID_PAIS)
+      references PAIS (ID_PAIS)
+      on update restrict
+      on delete restrict;
+
+alter table DIRECCION
+   add constraint FK_DIRECCIO_REFERENCE_ZONAS foreign key (ID_ZONA)
+      references ZONAS (ID_ZONA)
+      on update restrict
+      on delete restrict;
+
+alter table DIRECCION
+   add constraint FK_DIRECCIO_REFERENCE_MUNICIPI foreign key (ID_MUNICIPIO)
+      references MUNICIPIO (ID_MUNICIPIO)
+      on update restrict
+      on delete restrict;
+
+alter table DIRECCION
+   add constraint FK_DIRECCIO_REFERENCE_DEPARTAM foreign key (ID_DEPARTAMENTO)
+      references DEPARTAMENTO (ID_DEPARTAMENTO)
+      on update restrict
+      on delete restrict;
+
+alter table DIRECCION_PERSONA
+   add constraint FK_DIRECCIO_REFERENCE_DIRECCIO foreign key (ID_DIRECCION)
+      references DIRECCION (ID_DIRECCION)
+      on update restrict
+      on delete restrict;
+
+alter table DIRECCION_PERSONA
+   add constraint FK_DIRECCIO_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table DOCUMENTO_PERSONA
+   add constraint FK_DOCUMENT_REFERENCE_TIPO_DOC foreign key (ID_TIPO_DOCUMENTO)
+      references TIPO_DOCUMENTO (ID_TIPO_DOCUMENTO)
+      on update restrict
+      on delete restrict;
+
+alter table DOCUMENTO_PERSONA
+   add constraint FK_DOCUMENT_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table ENCARGADO_SEDE
+   add constraint FK_ENCARGAD_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table ENCARGADO_SEDE
+   add constraint FK_ENCARGAD_REFERENCE_SEDE foreign key (ID_SEDE)
+      references SEDE (ID_SEDE)
+      on update restrict
+      on delete restrict;
+
+alter table ENFERMEDAD
+   add constraint FK_ENFERMED_REFERENCE_TIPO_ENF foreign key (ID_TIPO_ENFERMEDAD)
+      references TIPO_ENFERMEDAD (ID_TIPO_ENFERMEDAD)
+      on update restrict
+      on delete restrict;
+
+alter table EXAMENES
+   add constraint FK_EXAMENES_REFERENCE_ENFERMED foreign key (ID_ENFERMEDAD)
+      references ENFERMEDAD (ID_ENFERMEDAD)
+      on update restrict
+      on delete restrict;
+
+alter table EXAMEN_PERSONA
+   add constraint FK_EXAMEN_P_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table EXAMEN_PERSONA
+   add constraint FK_EXAMEN_P_REFERENCE_EXAMENES foreign key (ID_EXAMEN)
+      references EXAMENES (ID_EXAMEN)
+      on update restrict
+      on delete restrict;
+
+alter table HISTORIAL_CLINICO
+   add constraint FK_HISTORIA_REFERENCE_ENFERMED foreign key (ID_ENFERMEDAD)
+      references ENFERMEDAD (ID_ENFERMEDAD)
+      on update restrict
+      on delete restrict;
+
+alter table HISTORIAL_CLINICO
+   add constraint FK_HISTORIA_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table MOVIMIENTOS_HISTORIAL
+   add constraint FK_MOVIMIEN_REFERENCE_ENFERMED foreign key (ID_ENFERMEDAD)
+      references ENFERMEDAD (ID_ENFERMEDAD)
+      on update restrict
+      on delete restrict;
+
+alter table MOVIMIENTOS_HISTORIAL
+   add constraint FK_MOVIMIEN_REFERENCE_EXAMENES foreign key (ID_EXAMEN)
+      references EXAMENES (ID_EXAMEN)
+      on update restrict
+      on delete restrict;
+
+alter table MOVIMIENTOS_HISTORIAL
+   add constraint FK_MOVIMIEN_REFERENCE_SUSPENSI foreign key (ID_SUSPENSION)
+      references SUSPENSION_MEDICA (ID_SUSPENSION)
+      on update restrict
+      on delete restrict;
+
+alter table MUNICIPIO
+   add constraint FK_MUNICIPI_REFERENCE_DEPARTAM foreign key (ID_DEPARTAMENTO)
+      references DEPARTAMENTO (ID_DEPARTAMENTO)
+      on update restrict
+      on delete restrict;
+
+alter table PERSONA
+   add constraint FK_PERSONA_REFERENCE_SEGURO foreign key (ID_SEGURO)
+      references SEGURO (ID_SEGURO)
+      on update restrict
+      on delete restrict;
+
+alter table PERSONA
+   add constraint FK_PERSONA_REFERENCE_TELEFONO foreign key (ID_TELEFONO)
+      references TELEFONO (ID_TELEFONO)
+      on update restrict
+      on delete restrict;
+
+alter table PERSONA
+   add constraint FK_PERSONA_REFERENCE_ROL foreign key (ID_ROL)
+      references ROL (ID_ROL)
+      on update restrict
+      on delete restrict;
+
+alter table PERSONA
+   add constraint FK_PERSONA_REFERENCE_TIPO_SAN foreign key (ID_TIPO_SANGRE)
+      references TIPO_SANGRE (ID_TIPO_SANGRE)
+      on update restrict
+      on delete restrict;
+
+alter table PERSONA_HISTORIAL
+   add constraint FK_PERSONA__REFERENCE_HISTORIA foreign key (ID_HISOTORIAL_CLINICO)
+      references HISTORIAL_CLINICO (ID_HISTORIAL_CLINICO)
+      on update restrict
+      on delete restrict;
+
+alter table PERSONA_HISTORIAL
+   add constraint FK_PERSONA__REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table SEDE
+   add constraint FK_SEDE_REFERENCE_DIRECCIO foreign key (ID_DIRECCION)
+      references DIRECCION (ID_DIRECCION)
+      on update restrict
+      on delete restrict;
+
+alter table SEGURO
+   add constraint FK_SEGURO_REFERENCE_TIPO_SEG foreign key (ID_TIPO_SEGURO)
+      references TIPO_SEGURO (ID_TIPO_SEGURO)
+      on update restrict
+      on delete restrict;
+
+alter table SUSPENSION_MEDICA
+   add constraint FK_SUSPENSI_REFERENCE_TIPO_SUS foreign key (ID_TIPO_SUSPENSION)
+      references TIPO_SUSPENSION (ID_TIPO_SUSPENSION)
+      on update restrict
+      on delete restrict;
+
+alter table SUSPENSION_PERSONA
+   add constraint FK_SUSPENSI_REFERENCE_SUSPENSI foreign key (ID_SUSPENSION)
+      references SUSPENSION_MEDICA (ID_SUSPENSION)
+      on update restrict
+      on delete restrict;
+
+alter table SUSPENSION_PERSONA
+   add constraint FK_SUSPENSI_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table TELEFONO
+   add constraint FK_TELEFONO_REFERENCE_TIPO_TEL foreign key (ID_TIPO_TELEFONO)
+      references TIPO_TELEFONO (ID_TIPO_TELEFONO)
+      on update restrict
+      on delete restrict;
+
+alter table TELEFONO
+   add constraint FK_TELEFONO_REFERENCE_COMPANIA foreign key (ID_COMPANIA)
+      references COMPANIA_TELEFONO (ID_COMPANIA)
+      on update restrict
+      on delete restrict;
+
+alter table TELEFONO_PERSONA
+   add constraint FK_TELEFONO_REFERENCE_TELEFONO foreign key (ID_TELEFONO)
+      references TELEFONO (ID_TELEFONO)
+      on update restrict
+      on delete restrict;
+
+alter table TELEFONO_PERSONA
+   add constraint FK_TELEFONO_REFERENCE_PERSONA foreign key (ID_PERSONA)
+      references PERSONA (ID_PERSONA)
+      on update restrict
+      on delete restrict;
+
+alter table ZONAS
+   add constraint FK_ZONAS_REFERENCE_COLONIA foreign key (ID_COLONIA)
+      references COLONIA (ID_COLONIA)
+      on update restrict
+      on delete restrict;
+
+
+ALTER TABLE "MEDICO" ADD CONSTRAINT "FK_MEDICO_PERSONA" FOREIGN KEY ("ID_PERSONA") REFERENCES "PERSONA" ("ID_PERSONA") ON DELETE CASCADE;
+
+ALTER TABLE "CLINICA" ADD CONSTRAINT "FK_CLINICA_CLINICA_1" FOREIGN KEY ("ID_DIRECCION") REFERENCES "DIRECCION_PERSONA" ("ID_DIRECCION") ON DELETE CASCADE;
+
+ALTER TABLE "PACIENTE_ODONTOLOGIA" ADD CONSTRAINT "FK_PACIENTE_ODONTOLOGIA_PACIENTE_ODONTOLOGIA_1" FOREIGN KEY ("ID_CLINICA") REFERENCES "CLINICA" ("ID_CLINICA") ON DELETE CASCADE;
+
+ALTER TABLE "PACIENTE_ODONTOLOGIA" ADD CONSTRAINT "FK_PACIENTE_ODONTOLOGIA_PACIENTE_ODONTOLOGIA_2" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE" ("ID_PACIENTE") ON DELETE CASCADE;
+
+ALTER TABLE "PACIENTE_ODONTOLOGIA" ADD CONSTRAINT "FK_PACIENTE_ODONTOLOGIA_PACIENTE_ODONTOLOGIA_3" FOREIGN KEY ("ID_MEDICO") REFERENCES "MEDICO" ("ID_MEDICO") ON DELETE CASCADE;
+
+ALTER TABLE "ESPECIALIDAD_MEDICO" ADD CONSTRAINT "FK_ESPECIALIDAD_MEDICO_ESPECIALIDAD_MEDICO_1" FOREIGN KEY ("ID_MEDICO") REFERENCES "MEDICO" ("ID_MEDICO") ON DELETE CASCADE;
+
+ALTER TABLE "ESPECIALIDAD_MEDICO" ADD CONSTRAINT "FK_ESPECIALIDAD_MEDICO_ESPECIALIDAD_MEDICO_2" FOREIGN KEY ("ID_ESPECIALIDAD") REFERENCES "ESPECIALIDAD" ("ID_ESPECIALIDAD") ON DELETE CASCADE;
+
+ALTER TABLE "DIAGNOSTICO" ADD CONSTRAINT "FK_DIAGNOSTICO_DIAGNOSTICO_1" FOREIGN KEY ("ID_PACIENTE") REFERENCES "PACIENTE_ODONTOLOGIA" ("ID_PACIENTE_ODONTOLOGIA") ON DELETE CASCADE;
+
+ALTER TABLE "DIAGNOSTICO" ADD CONSTRAINT "FK_DIAGNOSTICO_DIAGNOSTICO_2" FOREIGN KEY ("ID_HISTORIAL_CLINICO") REFERENCES "HISTORIAL_CLINICO" ("ID_HISTORIAL_CLINICO") ON DELETE CASCADE;
+
+ALTER TABLE "DIAGNOSTICO" ADD CONSTRAINT "FK_DIAGNOSTICO_DIAGNOSTICO_3" FOREIGN KEY ("ID_ENFERMEDAD") REFERENCES "ENFERMEDAD" ("ID_ENFERMEDAD") ON DELETE CASCADE;
