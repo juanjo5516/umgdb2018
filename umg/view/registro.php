@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="includes/css/bootstrap.css">
     <link rel="stylesheet" href="includes/css/registro.css">
+    <link rel="stylesheet" href="includes/css/custom.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <title>Registrar Persona</title>
 </head>
@@ -18,23 +19,23 @@
             <ul class="nav nav-tabs" id="myTab">
                 <div class="liner"></div>
                 <li  id="Persona">
-                    <a href="#persona" data-toggle="tab" title="persona">
+                    <a href="#persona" data-toggle="tab" title="Datos Personales">
                         <span class="round-tabs one">
                             <i class="fas fa-user"></i>
                         </span> 
                     </a>
                 </li>
                 <li>
-                    <a href="#profile" data-toggle="tab" title="profile">
+                    <a href="#profile" data-toggle="tab" title="Dirección">
                      <span class="round-tabs two">
-                            <i class="fas fa-user"></i>
+                            <i class="fas fa-home"></i>
                      </span> 
                     </a>
                  </li>
                  <li>
-                     <a href="#messages" data-toggle="tab" title="bootsnipp goodies">
+                     <a href="#messages" data-toggle="tab" title="Teléfono">
                      <span class="round-tabs three">
-                        <i class="fas fa-gift"></i>
+                        <i class="fas fa-phone-volume"></i>
                      </span> </a>
                 </li>
                 <li>
@@ -55,29 +56,57 @@
         <div class="tab-content">
             <div class="tab-pane fade in active " id="persona">
                 <div class="row"> 
-                    <div class="col-sm-6"> 
+                    <div class="col-sm-5"> 
                         <div class="card"> 
                             <div class="card-body"> 
-                                <input name="caja" id="caja" />
-                                <h5 class="card-title">Special title treatment</h5> 
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> 
-                                <a href="#" class="btn btn-primary">Go somewhere</a> 
+                                <div class="user">
+                                    <img class="img" src="includes/img/user.png"  title="Fotografia">
+                                </div>
                             </div> 
                         </div> 
                     </div> 
-                    <div class="col-sm-6"> 
+                    <div class="col-sm-7"> 
                         <div class="card"> 
                             <div class="card-body"> 
-                                <h5 class="card-title">Special title treatment</h5> 
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> 
-                                <a href="#" class="btn btn-primary">Go somewhere</a> 
+                                <div class="col-sm-12">
+                                    <h2>Datos de Usuario:</h2>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="email">Email: </label>
+                                        <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        </div>
+                                    </div>
+                                </div> 
                             </div> 
                         </div> 
                     </div> 
-                    <div>
-                        <a href="" ><input type="button" name="anterior" value="Anterior"></a>
-                        <a href="#profile" data-toggle="tab"><input type="button" name="adelantar" value="Siguiente"></a>
-                    </div>
+                </div>
+                <div class="row controles">
+                    <a href="#profile" data-toggle="tab"><input type="button" class="btn btn-success" name="adelantar" value="Siguiente"></a>
                 </div>
             </div>
             <div class="tab-pane fade in " id="profile">
