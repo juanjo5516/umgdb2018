@@ -11,15 +11,16 @@
 </head>
 <body>
    
-           
+<form id="registro">  
+
      <div class="board">
         <div class="board-inner">
             <ul class="nav nav-tabs" id="myTab">
                 <div class="liner"></div>
-                <li class="active">
-                    <a href="#home" data-toggle="tab" title="welcome">
+                <li  id="Persona">
+                    <a href="#persona" data-toggle="tab" title="persona">
                         <span class="round-tabs one">
-                            <i class="fas fa-home"></i>
+                            <i class="fas fa-user"></i>
                         </span> 
                     </a>
                 </li>
@@ -52,10 +53,34 @@
             </ul>
         </div>
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="home">
-
+            <div class="tab-pane fade in active " id="persona">
+                <div class="row"> 
+                    <div class="col-sm-6"> 
+                        <div class="card"> 
+                            <div class="card-body"> 
+                                <input name="caja" id="caja" />
+                                <h5 class="card-title">Special title treatment</h5> 
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> 
+                                <a href="#" class="btn btn-primary">Go somewhere</a> 
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="col-sm-6"> 
+                        <div class="card"> 
+                            <div class="card-body"> 
+                                <h5 class="card-title">Special title treatment</h5> 
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> 
+                                <a href="#" class="btn btn-primary">Go somewhere</a> 
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div>
+                        <a href="" ><input type="button" name="anterior" value="Anterior"></a>
+                        <a href="#profile" data-toggle="tab"><input type="button" name="adelantar" value="Siguiente"></a>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane fade" id="profile">
+            <div class="tab-pane fade in " id="profile">
                 <h3 class="head text-center">Create a Bootsnipp<sup>™</sup> Profile</h3>
                     <p class="narrow text-center">
                               Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
@@ -94,9 +119,9 @@
             <div class="clearfix"></div>
         </div>
     </div>
+</form>
 
 
-
-<script src="../includes/js/comandos.js"></script>
+<script src="includes/js/comandos.js"></script>
 </body>
 </html>
