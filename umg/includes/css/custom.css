@@ -44,3 +44,12 @@
     padding-top: 8%;
     text-align: right;
 }
+
+.otro{
+    padding-top: 6% !important;
+    padding-right: 0% !important;
+}
+
+.input{
+    margin-top: 5%;
+}

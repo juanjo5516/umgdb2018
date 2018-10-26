@@ -2,7 +2,7 @@
 
 class Conexion {
     private $db = 'oci:dbname=localhost/xe';
-    private $user = 'jjolon';
+    private $user = 'jjolong';
     private $password = '123456';
 
     public function Conectar(){

@@ -18,35 +18,35 @@
         <div class="board-inner">
             <ul class="nav nav-tabs" id="myTab">
                 <div class="liner"></div>
-                <li  id="Persona">
+                <li  id="Persona" class="active">
                     <a href="#persona" data-toggle="tab" title="Datos Personales">
                         <span class="round-tabs one">
                             <i class="fas fa-user"></i>
                         </span> 
                     </a>
                 </li>
-                <li>
-                    <a href="#profile" data-toggle="tab" title="Dirección">
+                <li id="Direccion">
+                    <a href="#direccion" data-toggle="tab" title="Dirección">
                      <span class="round-tabs two">
                             <i class="fas fa-home"></i>
                      </span> 
                     </a>
                  </li>
-                 <li>
-                     <a href="#messages" data-toggle="tab" title="Teléfono">
+                 <li id="Telefono">
+                     <a href="#tel" data-toggle="tab" title="Teléfono">
                      <span class="round-tabs three">
                         <i class="fas fa-phone-volume"></i>
                      </span> </a>
                 </li>
-                <li>
-                    <a href="#settings" data-toggle="tab" title="blah blah">
+                <li id="Otros">
+                    <a href="#otros" data-toggle="tab" title="Otros">
                          <span class="round-tabs four">
-                            <i class="fas fa-comments"></i>
+                            <i class="fas fa-plus"></i>
                          </span> 
                      </a>
                 </li>     
-                <li>
-                    <a href="#doner" data-toggle="tab" title="completed">
+                <li id="Completo">
+                    <a href="#completo" data-toggle="tab" title="completed">
                          <span class="round-tabs five">
                             <i class="fas fa-check"></i>
                          </span> </a>
@@ -71,33 +71,61 @@
                                 <div class="col-sm-12">
                                     <h2>Datos de Usuario:</h2>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="email">Email: </label>
+                                        <label class="control-label col-sm-2" for="Pnombre">Primer Nombre: </label>
                                         <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                                        <input type="text" class="form-control" id="Pnombre" placeholder="Primer Nombre">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <label class="control-label col-sm-2" for="Snombre">Segundo Nombre: </label>
                                         <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        <input type="text" class="form-control" id="Snombre" placeholder="Segundo Nombre">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <label class="control-label col-sm-2" for="Papellido">Primer Apellido: </label>
                                         <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        <input type="text" class="form-control" id="Papellido" placeholder="Primer Apellido">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <label class="control-label col-sm-2" for="Sapellido">Segundo Apellido: </label>
                                         <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        <input type="text" class="form-control" id="Sapellido" placeholder="Segundo Apellido">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="pwd">Password: </label>
+                                        <label class="control-label col-sm-2" for="Acasado">Apellidos Casado/a: </label>
                                         <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                                        <input type="text" class="form-control" id="Acasado" placeholder="Apellidos Casado/a">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Fnacimiento">Fecha Nacimiento: </label>
+                                        <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="Fnacimiento" placeholder="Fecha Nacimiento">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Tdoc">Tipo Doc.: </label>
+                                        <div class="col-sm-4">
+                                            <select name="Sgenero" id="Sgenero" class="form-control">
+                                                <option value="">DPI</option>
+                                                <option value="">Pasaporte</option>
+                                            </select>
+                                        </div>
+                                        <label class="control-label col-sm-2" for="Ndoc">Número: </label>
+                                        <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="Ndoc" placeholder="Número">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="Sgenero">Genero: </label>
+                                        <div class="col-sm-10">
+                                            <select name="Sgenero" id="Sgenero" class="form-control">
+                                                <option value="M">Masculino</option>
+                                                <option value="F">Femenino</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div> 
@@ -106,44 +134,84 @@
                     </div> 
                 </div>
                 <div class="row controles">
-                    <a href="#profile" data-toggle="tab"><input type="button" class="btn btn-success" name="adelantar" value="Siguiente"></a>
+                    <a href="#direccion" data-toggle="tab"><input type="button" class="btn btn-success" name="adelantar"  id="adelantar" value="Siguiente"></a>
                 </div>
             </div>
-            <div class="tab-pane fade in " id="profile">
-                <h3 class="head text-center">Create a Bootsnipp<sup>™</sup> Profile</h3>
-                    <p class="narrow text-center">
-                              Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
-                    </p>   
-                    <p class="text-center">
-                        <a href="" class="btn btn-success btn-outline-rounded green"> create your profile <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
-                    </p>    
+            <div class="tab-pane fade in " id="direccion">
+                <div class="row">
+                    <div class="col-sm-6"> 
+                        <div class="card"> 
+                            <div class="card-body"> 
+                                    <h2>Dirección de Usuario:</h2>
+                                    <div class="form-group ">
+                                        <label class=" col-sm-5" for="pais">Pais: </label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="pais" id="pais"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group otro">
+                                        <label class="input col-sm-5" for="departamento">Departamento: </label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="departamento" id="departamento"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group otro">
+                                        <label class=" input col-sm-5" for="municipio">Municipio: </label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="municipio" id="numicipio"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group otro">
+                                        <label class=" input col-sm-5" for="Colonia">Colonia: </label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" type="text" class="form-control " id="Colonia" name="Colonia" placeholder="Colonia">
+                                        </div>
+                                    </div>
+                            </div> 
+                        </div> 
+                    </div>
+                    <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                <h2>&nbsp</h2>
+                                    <div class="form-group otro">
+                                        <label class=" input col-sm-5" for="Calle">Calle: </label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" type="text" class="form-control " id="Calle" name="Calle" placeholder="Calle">
+                                        </div>
+                                    </div>
+                                    <div class="form-group otro">
+                                        <label class=" input col-sm-5" for="Edificio">Edificio: </label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" type="text" class="form-control " id="Edificio" name="Edificio" placeholder="Edificio">
+                                        </div>
+                                    </div>
+                                    <div class="form-group otro">
+                                        <label class=" input col-sm-5" for="Zona">Zona: </label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="Zona" id="Zona"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="row controles">
+                    <a href="#persona" data-toggle="tab"><input type="button" class="btn btn-success" name="DAnterior"  id="DAnterior" value="Anterior"></a>
+                    <a href="#tel" data-toggle="tab"><input type="button" class="btn btn-success" name="Dadelantar"  id="Dadelantar" value="Siguiente"></a>
+                </div>
              </div>
-            <div class="tab-pane fade" id="messages">
-                 <h3 class="head text-center">Bootsnipp goodies</h3>
-                    <p class="narrow text-center">
-                              Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
-                    </p> 
-                    <p class="text-center">
-                        <a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
-                    </p>
+            <div class="tab-pane fade in" id="tel">
+
             </div>
-            <div class="tab-pane fade" id="settings">
-                <h3 class="head text-center">Drop comments!</h3>
-                    <p class="narrow text-center">
-                              Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
-                    </p>  
-                    <p class="text-center">
-                        <a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
-                    </p>
+            <div class="tab-pane fade in" id="otros">
+
             </div>
-            <div class="tab-pane fade" id="doner">
-                <div class="text-center">
-                    <i class="img-intro icon-checkmark-circle"></i>
+            <div class="tab-pane fade in" id="completo">
+            <div class="row controles">
+                    <a href="#persona" data-toggle="tab"><input type="button" class="btn btn-success" name="DAnterior"  id="DAnterior" value="Anterior"></a>
+                    <input type="submit" class="btn btn-success" name="enviar"  id="enviar" value="enviar"></a>
                 </div>
-                <h3 class="head text-center">thanks for staying tuned! <span style="color:#f48260;">♥</span> Bootstrap</h3>
-                <p class="narrow text-center">
-                        Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
-                </p>
             </div>
             <div class="clearfix"></div>
         </div>
