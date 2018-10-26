@@ -132,9 +132,7 @@ ALTER TABLE clinicas ADD CONSTRAINT clinicas_pk PRIMARY KEY ( id_clinica );
 CREATE TABLE colonia (
     id_colonia     INTEGER NOT NULL,
     id_municipio   INTEGER NOT NULL,
-    colonia        VARCHAR2(30),
-    calle          VARCHAR2(30),
-    edificio       VARCHAR2(30)
+    colonia        VARCHAR2(30)
 );
 
 ALTER TABLE colonia ADD CONSTRAINT colonia_pk PRIMARY KEY ( id_colonia );
@@ -181,7 +179,8 @@ ALTER TABLE cuentas_por_pagar ADD CONSTRAINT cuentas_por_pagar_pk PRIMARY KEY ( 
 CREATE TABLE departamento (
     id_departamento   INTEGER NOT NULL,
     id_pais           INTEGER NOT NULL,
-    departamento      VARCHAR2(50)
+    departamento      VARCHAR2(50),
+    fecha_registro    DATE
 );
 
 ALTER TABLE departamento ADD CONSTRAINT departamento_pk PRIMARY KEY ( id_departamento );
@@ -228,9 +227,10 @@ CREATE TABLE direccion (
     id_direccion           INTEGER NOT NULL,
     id_zona                INTEGER NOT NULL,
     id_municipio           INTEGER NOT NULL,
-    id_departamento        INTEGER NOT NULL,
-    id_colonia             VARCHAR2(30),
-    referencia_direccion   VARCHAR2(50)
+    id_colonia             INTEGER NOT NULL,
+    calle_avenida          VARCHAR2(200),
+    numero                 VARCHAR2(50),
+    edificio               VARCHAR2(200)
 );
 
 ALTER TABLE direccion ADD CONSTRAINT direccion_pk PRIMARY KEY ( id_direccion );
@@ -240,7 +240,8 @@ CREATE TABLE direccion_persona (
     id_persona     INTEGER NOT NULL
 );
 
-ALTER TABLE direccion_persona ADD CONSTRAINT direccion_persona_pk PRIMARY KEY ( id_direccion );
+ALTER TABLE direccion_persona ADD CONSTRAINT direccion_persona_pk PRIMARY KEY ( id_direccion,id_persona );
+
 
 CREATE TABLE direccion_proveedores (
     id_direccion_prov   INTEGER NOT NULL,
@@ -425,7 +426,10 @@ ALTER TABLE movimientos_historial ADD CONSTRAINT movimientos_historial_pk PRIMAR
 CREATE TABLE municipios (
     id_municipio      INTEGER NOT NULL,
     id_departamento   INTEGER,
-    municipio         VARCHAR2(50)
+    id_pais           INTEGER,
+    municipio         VARCHAR2(50),
+    fecha_registro    DATE
+    
 );
 
 ALTER TABLE municipios ADD CONSTRAINT municipios_pk PRIMARY KEY ( id_municipio );
@@ -731,7 +735,7 @@ ALTER TABLE transacciones ADD CONSTRAINT transacciones_pk PRIMARY KEY ( id_trans
 
 CREATE TABLE zonas (
     id_zona            INTEGER NOT NULL,
-    id_colonia         INTEGER,
+    id_municipio         INTEGER,
     zona               NUMBER(2),
     fecha_registro     DATE,
     usuario_registro   VARCHAR2(25)
@@ -817,8 +821,47 @@ ALTER TABLE TIPO_PACIENTE_O ADD  CONSTRAINT diagnostico_fk
         FOREIGN KEY(idDiagnostico)
         REFERENCES DIAGNOSTICO(ID_DIAGNOSTICO);
 
-
+--Alter a tablas direccion, municipio, departamento, pais, colonia, direccion persona
 ALTER TABLE zonas ADD CONSTRAINT zonas_pk PRIMARY KEY ( id_zona );
+
+ALTER TABLE colonia
+    ADD CONSTRAINT colonia_municipios_fk FOREIGN KEY ( id_municipio )
+        REFERENCES municipios ( id_municipio );
+        
+ALTER TABLE departamento
+    ADD CONSTRAINT departamento_pais_fk FOREIGN KEY ( id_pais )
+        REFERENCES pais ( id_pais );
+
+ALTER TABLE direccion
+    ADD CONSTRAINT direccion_municipios_fk FOREIGN KEY ( id_municipio )
+        REFERENCES municipios ( id_municipio );
+ALTER TABLE direccion
+    ADD CONSTRAINT direccion_zonas_fk FOREIGN KEY ( id_zona )
+        REFERENCES zonas ( id_zona );
+        
+ALTER TABLE direccion
+    ADD CONSTRAINT direccion_colonia_fk FOREIGN KEY ( id_colonia )
+        REFERENCES colonia ( id_colonia );
+
+ALTER TABLE direccion_persona
+    ADD CONSTRAINT direccion_persona_direccion_fk FOREIGN KEY ( id_direccion )
+        REFERENCES direccion ( id_direccion );
+
+ALTER TABLE direccion_persona
+    ADD CONSTRAINT direccion_persona_persona_fk FOREIGN KEY ( id_persona )
+        REFERENCES persona ( id_persona );
+        
+ALTER TABLE municipios
+    ADD CONSTRAINT municipio_departamento_fk FOREIGN KEY ( id_departamento )
+        REFERENCES departamento ( id_departamento );
+
+    
+
+ALTER TABLE documento_persona
+    ADD CONSTRAINT documento_persona_persona_fk FOREIGN KEY ( id_persona )
+        REFERENCES persona ( id_persona );
+
+
 
 ALTER TABLE cita
     ADD CONSTRAINT cita_clinicas_fk FOREIGN KEY ( id_clinica )
@@ -844,9 +887,6 @@ ALTER TABLE clinicas
     ADD CONSTRAINT clinicas_sede_fk FOREIGN KEY ( id_sede )
         REFERENCES sede ( id_sede );
 
-ALTER TABLE colonia
-    ADD CONSTRAINT colonia_municipios_fk FOREIGN KEY ( id_municipio )
-        REFERENCES municipios ( id_municipio );
 
 ALTER TABLE compania_telefono
     ADD CONSTRAINT compania_telefono_telefono_fk FOREIGN KEY ( id_compania )
@@ -864,9 +904,7 @@ ALTER TABLE cuenta_proveedores
     ADD CONSTRAINT cuentayproveedores FOREIGN KEY ( id_proveedor )
         REFERENCES proveedores ( id_proveedor );
 
-ALTER TABLE departamento
-    ADD CONSTRAINT departamento_pais_fk FOREIGN KEY ( id_pais )
-        REFERENCES pais ( id_pais );
+
 
 ALTER TABLE detalle_compra
     ADD CONSTRAINT detalle_compra_compras_fk FOREIGN KEY ( id_compra )
@@ -900,29 +938,6 @@ ALTER TABLE direccion_proveedores
     ADD CONSTRAINT direcc_provee FOREIGN KEY ( id_direccion_prov )
         REFERENCES direccion ( id_direccion );
 
-ALTER TABLE direccion
-    ADD CONSTRAINT direccion_departamento_fk FOREIGN KEY ( id_departamento )
-        REFERENCES departamento ( id_departamento );
-
-ALTER TABLE direccion
-    ADD CONSTRAINT direccion_direccion_persona_fk FOREIGN KEY ( id_direccion )
-        REFERENCES direccion_persona ( id_direccion );
-
-ALTER TABLE direccion
-    ADD CONSTRAINT direccion_municipios_fk FOREIGN KEY ( id_municipio )
-        REFERENCES municipios ( id_municipio );
-
-ALTER TABLE direccion_persona
-    ADD CONSTRAINT direccion_persona_persona_fk FOREIGN KEY ( id_persona )
-        REFERENCES persona ( id_persona );
-
-ALTER TABLE direccion
-    ADD CONSTRAINT direccion_zonas_fk FOREIGN KEY ( id_zona )
-        REFERENCES zonas ( id_zona );
-
-ALTER TABLE documento_persona
-    ADD CONSTRAINT documento_persona_persona_fk FOREIGN KEY ( id_persona )
-        REFERENCES persona ( id_persona );
 
 ALTER TABLE encargado_sede
     ADD CONSTRAINT encargado_sede_persona_fk FOREIGN KEY ( id_persona )
