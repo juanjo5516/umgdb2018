@@ -67,7 +67,6 @@ drop table TELEFONO_PROVEEDORES cascade constraints;
 drop table TIPO_DOCUMENTO cascade constraints;
 drop table TIPO_DOCUMENTOS_PAGO cascade constraints;
 drop table TIPO_ENFERMEDAD cascade constraints;
-drop table TIPO_PAGO_CLIENTES cascade constraints;
 drop table TIPO_PERSONAL_TECNICO cascade constraints;
 drop table TIPO_RAZON_SOCIAL cascade constraints;
 drop table TIPO_SANGRE cascade constraints;
@@ -83,6 +82,25 @@ drop table ALIMENTO cascade constraints;
 drop table TIEMPO_COMIDA cascade constraints;
 drop table DIETA cascade constraints;
 drop table DETALLE_DIETA cascade constraints;
+alter table CREDITO_CILIENTE
+   drop constraint FK_CREDITO__REFERENCE_INTERES;
+alter table DETALLE_PAGO_CLIENTE
+   drop constraint FK_DETALLE__REFERENCE_TIPO_PAG;
+alter table MOVIMIENTOS
+   drop constraint FK_MOVIMIEN_REFERENCE_CREDITO_;
+alter table MOVIMIENTOS
+   drop constraint FK_MOVIMIEN_REFERENCE_TIPO_MOV;
+alter table PRODUCTOS_SERVICIOS
+   drop constraint FK_PRODUCTO_REFERENCE_CATEGORI;
+drop table CATEGORIA cascade constraints;
+drop table CREDITO_CILIENTE cascade constraints;
+drop table DETALLE_PAGO_CLIENTE cascade constraints;
+drop table ESTADO cascade constraints;
+drop table INTERES cascade constraints;
+drop table MOVIMIENTOS cascade constraints;
+drop table PRODUCTOS_SERVICIOS cascade constraints;
+drop table TIPO_MOV cascade constraints;
+drop table TIPO_PAGO cascade constraints;
 
 CREATE  TABLE bancos (
     id_banco   INTEGER NOT NULL,
@@ -113,13 +131,114 @@ CREATE TABLE cita_persona (
 ALTER TABLE cita_persona ADD CONSTRAINT cita_persona_pk PRIMARY KEY ( id_cita,
                                                                       id_persona );
 
-CREATE TABLE cliente (
-    id_cliente          INTEGER NOT NULL,
-    id_persona          INTEGER NOT NULL,
-    id_razon_social_p   INTEGER NOT NULL
+create table CATEGORIA 
+(
+   ID_CATEGORIA         INTEGER              not null,
+   NOMBRE               VARCHAR2(30),
+   DESCRIPCION          VARCHAR2(100),
+   constraint PK_CATEGORIA primary key (ID_CATEGORIA)
 );
 
-ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( id_cliente );
+create table CLIENTE 
+(
+   ID_CLIENTE           INTEGER              not null,
+   ID_PERSONA           INTEGER              not null,
+   ID_RAZON_SOCIAL_P    INTEGER,
+   constraint PK_CLIENTE primary key (ID_CLIENTE)
+);
+
+create table CREDITO_CILIENTE 
+(
+   ID_CREDITO           INTEGER              not null,
+   ID_CLIENTE           INTEGER,
+   ID_INTERES           INTEGER,
+   SALDO                FLOAT,
+   FECHA_INICIO         DATE,
+   FECHA_FIN            DATE,
+   USUARIO_REGISTRO     INTEGER,
+   LIMITE               INTEGER,
+   constraint PK_CREDITO_CILIENTE primary key (ID_CREDITO)
+);
+
+create table DETALLE_FACTURA 
+(
+   ID_DET_FAC           INTEGER              not null,
+   ID_FACTURA           INTEGER              not null,
+   CANTIDAD             INTEGER              not null,
+   PRECIO               FLOAT               not null,
+   constraint PK_DETALLE_FACTURA primary key (ID_DET_FAC)
+);
+
+create table DETALLE_PAGO_CLIENTE
+(
+   ID_DET_GAGO          INTEGER              not null,
+   ID_TIPO_PAGO         INTEGER              not null,
+   CANTIDAD             FLOAT               not null,
+   constraint PK_DETALLE_PAGO_CLIENTE primary key (ID_DET_GAGO)
+);
+
+create table ESTADO 
+(
+   ID_ESTADO            INTEGER              not null,
+   ESTADO               VARCHAR2(15),
+   constraint PK_ESTADO primary key (ID_ESTADO)
+);
+
+create table FACTURACION 
+(
+   ID_FACTURA INTEGER              not null,
+   ID_CLIENTE           INTEGER,
+   ID_ESTADO            INTEGER,
+   FECHA_TRANSACCION    DATE,
+   USUARIO_REGISTRO     INTEGER,
+   NIT                  VARCHAR2(30),
+   constraint PK_FACTURACION primary key (ID_FACTURA)
+);
+
+create table INTERES 
+(
+   ID_INTERES           INTEGER              not null,
+   INTERES              FLOAT,
+   FECHA                DATE,
+   USUARIO_REGISTRO     INTEGER,
+   constraint PK_INTERES primary key (ID_INTERES)
+);
+
+create table MOVIMIENTOS 
+(
+   ID_MOV               INTEGER              not null,
+   ID_CREDITO           INTEGER,
+   ID_TIPO_MOV          INTEGER,
+   CANTIDAD             FLOAT,
+   FECHA                DATE,
+   DESCRIPCION          VARCHAR2(200),
+   USUARIO_REGISTO      INTEGER,
+   constraint PK_MOVIMIENTOS primary key (ID_MOV)
+);
+
+create table PRODUCTOS_SERVICIOS 
+(
+   ID_PRO_SER           INTEGER              not null,
+   ID_CATEGORIA         INTEGER,
+   DESCRIPCION          VARCHAR2(200),
+   constraint PK_PRODUCTOS_SERVICIOS primary key (ID_PRO_SER)
+);
+
+create table TIPO_MOV 
+(
+   ID_TIPO_MOV          INTEGER              not null,
+   TIPO_MOV             VARCHAR2(50),
+   DESCRIPCION          VARCHAR2(15),
+   constraint PK_TIPO_MOV primary key (ID_TIPO_MOV)
+);
+
+create table TIPO_PAGO 
+(
+   ID_TIPO_PAGO         INTEGER              not null,
+   TIPO_PAGO            VARCHAR2(30),
+   OTROS_DETALLES       VARCHAR2(40),
+   constraint PK_TIPO_PAGO primary key (ID_TIPO_PAGO)
+);
 
 CREATE TABLE clinicas (
     id_clinica    INTEGER NOT NULL,
@@ -192,14 +311,6 @@ CREATE TABLE detalle_compra (
     precio_unidad   NUMBER,
     total           NUMBER
 );
-
-CREATE TABLE detalle_factura (
-    id_detalle_factura   INTEGER NOT NULL,
-    id_factura           INTEGER NOT NULL,
-    id_tipo_servicio     INTEGER NOT NULL
-);
-
-ALTER TABLE detalle_factura ADD CONSTRAINT detalle_factura_pk PRIMARY KEY ( id_detalle_factura );
 
 CREATE TABLE detalle_pago (
     id_detalle_pago          INTEGER NOT NULL,
@@ -309,19 +420,6 @@ CREATE TABLE examenes (
 );
 
 ALTER TABLE examenes ADD CONSTRAINT examenes_pk PRIMARY KEY ( id_examen );
-
-CREATE TABLE facturacion (
-    id_factura          INTEGER NOT NULL,
-    id_cliente          INTEGER NOT NULL,
-    id_tipo_servicio    INTEGER NOT NULL,
-    cantidad            NUMBER,
-    total               NUMBER(5,2),
-    fecha_transaccion   DATE,
-    usuario_registro    VARCHAR2(25),
-    id_transaccion      INTEGER NOT NULL
-);
-
-ALTER TABLE facturacion ADD CONSTRAINT facturacion_pk PRIMARY KEY ( id_factura );
 
 CREATE TABLE farmacias (
     id_farmacia   INTEGER NOT NULL,
@@ -663,13 +761,6 @@ CREATE TABLE tipo_enfermedad (
 
 ALTER TABLE tipo_enfermedad ADD CONSTRAINT tipo_enfermedad_pk PRIMARY KEY ( id_tipo_enfermedad );
 
-CREATE TABLE tipo_pago_clientes (
-    id_tipo_pago        INTEGER NOT NULL,
-    tipo_pago_cliente   VARCHAR2(100)
-);
-
-ALTER TABLE tipo_pago_clientes ADD CONSTRAINT tipo_pago_clientes_pk PRIMARY KEY ( id_tipo_pago );
-
 CREATE TABLE tipo_personal_tecnico (
     id_tipo_personal_t   INTEGER NOT NULL,
     descripcion          VARCHAR2(50)
@@ -918,10 +1009,6 @@ ALTER TABLE detalle_pago
     ADD CONSTRAINT detalle_pago_compras_fk FOREIGN KEY ( id_compra )
         REFERENCES compras ( id_compra );
 
-ALTER TABLE detalle_factura
-    ADD CONSTRAINT detalle_tiposervicio FOREIGN KEY ( id_tipo_servicio )
-        REFERENCES tipo_servicio ( id_tipo_servicio );
-
 ALTER TABLE diagnostico
     ADD CONSTRAINT diagnostico_enfermedad_fk FOREIGN KEY ( id_enfermedad )
         REFERENCES enfermedad ( id_enfermedad );
@@ -966,14 +1053,6 @@ ALTER TABLE examen_persona
 ALTER TABLE examen_persona
     ADD CONSTRAINT examen_persona_persona_fk FOREIGN KEY ( id_persona )
         REFERENCES persona ( id_persona );
-
-ALTER TABLE facturacion
-    ADD CONSTRAINT facturacion_cliente_fk FOREIGN KEY ( id_cliente )
-        REFERENCES cliente ( id_cliente );
-
-ALTER TABLE facturacion
-    ADD CONSTRAINT facturacion_transacciones_fk FOREIGN KEY ( id_transaccion )
-        REFERENCES transacciones ( id_transaccion );
 
 ALTER TABLE producto_farmacia
     ADD CONSTRAINT farmacia_farmacias_fk FOREIGN KEY ( id_farmacia )
@@ -1060,14 +1139,6 @@ ALTER TABLE pago_proveedores
 ALTER TABLE pago_proveedores
     ADD CONSTRAINT pago_proveedores_fk FOREIGN KEY ( id_proveedor )
         REFERENCES proveedores ( id_proveedor );
-
-ALTER TABLE pagos_clientes
-    ADD CONSTRAINT pago_tipopagos FOREIGN KEY ( id_tipo_pago )
-        REFERENCES tipo_pago_clientes ( id_tipo_pago );
-
-ALTER TABLE pagos_clientes
-    ADD CONSTRAINT pagos_transac FOREIGN KEY ( id_transaccion )
-        REFERENCES transacciones ( id_transaccion );
 
 ALTER TABLE persona
     ADD CONSTRAINT persona_rol_fk FOREIGN KEY ( id_rol )
@@ -1160,6 +1231,40 @@ ALTER TABLE tipo_documento
 ALTER TABLE tipo_documentos_pago
     ADD CONSTRAINT tipodocpag_detpago FOREIGN KEY ( id_tipo_documento )
         REFERENCES detalle_pago ( id_detalle_pago );
+
+alter table CREDITO_CILIENTE
+   add constraint FK_CREDITO__REFERENCE_INTERES foreign key (ID_INTERES)
+      references INTERES (ID_INTERES);
+
+alter table CREDITO_CILIENTE
+   add constraint FK_CREDITO__REFERENCE_CLIENTE foreign key (ID_CLIENTE)
+      references CLIENTE (ID_CLIENTE);
+
+alter table DETALLE_FACTURA
+   add constraint FK_DETALLE__REFERENCE_PRODUCTO foreign key (ID_FACTURA)
+      references PRODUCTOS_SERVICIOS (ID_PRO_SER);
+
+alter table DETALLE_PAGO_CLIENTE
+   add constraint FK_DETALLE__REFERENCE_TIPO_PAG foreign key (ID_TIPO_PAGO)
+      references TIPO_PAGO (ID_TIPO_PAGO);
+
+
+alter table FACTURACION
+   add constraint FK_FACTURAC_REFERENCE_ESTADO foreign key (ID_ESTADO)
+      references ESTADO (ID_ESTADO);
+
+alter table MOVIMIENTOS
+   add constraint FK_MOVIMIEN_REFERENCE_CREDITO_ foreign key (ID_CREDITO)
+      references CREDITO_CILIENTE (ID_CREDITO);
+
+alter table MOVIMIENTOS
+   add constraint FK_MOVIMIEN_REFERENCE_TIPO_MOV foreign key (ID_TIPO_MOV)
+      references TIPO_MOV (ID_TIPO_MOV);
+
+alter table PRODUCTOS_SERVICIOS
+   add constraint FK_PRODUCTO_REFERENCE_CATEGORI foreign key (ID_CATEGORIA)
+      references CATEGORIA (ID_CATEGORIA);
+
 
 --CREACION DE PAQUETES POR MODULOS
 
